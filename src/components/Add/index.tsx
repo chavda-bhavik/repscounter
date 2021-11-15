@@ -9,7 +9,7 @@ export const Add: React.FC<AddProps> = ({ onClick = () => {} }) => {
     return (
         <button
             onClick={onClick}
-            className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-1 transition-colors duration-200 cursor-pointer hover:bg-base-100 border-2 border-transparent hover:border-primary-dark group"
+            className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
         >
             <Icon
                 icon="plus"

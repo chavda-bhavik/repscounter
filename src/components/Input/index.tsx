@@ -9,6 +9,7 @@ interface InputProps {
     required?: boolean;
     min?: number;
     max?: number;
+    error?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -20,11 +21,25 @@ export const Input: React.FC<InputProps> = ({
     max,
     required = false,
     children,
+    error,
 }) => {
     const inputContent = () => {
         switch (type) {
             case 'select':
-                return <select className="input input-bordered select-accent">{children}</select>;
+                return (
+                    <select
+                        className={classNames(
+                            'select input-bordered',
+                            {
+                                'select-error': !!error,
+                                'select-accent': !error,
+                            },
+                            classNames
+                        )}
+                    >
+                        {children}
+                    </select>
+                );
             default:
                 return (
                     <input
@@ -32,7 +47,14 @@ export const Input: React.FC<InputProps> = ({
                         placeholder={placeholder}
                         min={min}
                         max={max}
-                        className={classNames('input input-accent input-bordered', className)}
+                        className={classNames(
+                            'input input-bordered',
+                            {
+                                'input-error': !!error,
+                                'input-accent': !error,
+                            },
+                            className
+                        )}
                     />
                 );
                 break;
@@ -48,6 +70,7 @@ export const Input: React.FC<InputProps> = ({
                 </label>
             )}
             {inputContent()}
+            {error && <p className="label-text text-error m-1 font-medium">{error}</p>}
         </div>
     );
 };

@@ -6,3 +6,5 @@ export { AddCountModal } from './AddCountModal';
 export { Backdrop } from './Backdrop';
 export { Input } from './Input';
 export { AddExerciseModal } from './AddExerciseModal';
+export { MainContainer } from './MainContainer';
+export { Layout } from './Layout';
