@@ -6,4 +6,23 @@
     .link {
         @apply hover:underline;
     }
+    .modal.active {
+        @apply visible opacity-100 pointer-events-auto;
+    }
+    .modal-box {
+        max-height: 90vh;
+        overflow: auto;
+    }
+    .display-3 {
+        @apply font-semibold text-lg;
+    }
+    .display-2 {
+        @apply font-semibold text-xl;
+    }
+    .display-1 {
+        @apply font-semibold text-2xl;
+    }
+    .label-text {
+        @apply tracking-wide font-semibold;
+    }
 }
