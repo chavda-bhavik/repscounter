@@ -1,0 +1,8 @@
+query Exercises {
+    exercies {
+        calories
+        name
+        id
+        target
+    }
+}

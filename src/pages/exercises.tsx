@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Exercise, Add, Header, AddExerciseModal, MainContainer } from '@/components';
+import { useExercisesQuery } from '@/generated/graphql';
 
 const Exercices: NextPage = () => {
+    const { loading, data, error } = useExercisesQuery({
+        skip: typeof window === 'undefined',
+    });
+    console.log(data, loading, error);
+
     const [addNew, setAddNew] = useState(false);
     return (
         <>
