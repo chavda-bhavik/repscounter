@@ -1,5 +1,5 @@
 query Exercises {
-    exercies {
+    exercises {
         calories
         name
         id

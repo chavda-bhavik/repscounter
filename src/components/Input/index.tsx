@@ -10,6 +10,7 @@ interface InputProps {
     min?: number;
     max?: number;
     error?: string;
+    register?: any;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -22,6 +23,7 @@ export const Input: React.FC<InputProps> = ({
     required = false,
     children,
     error,
+    register,
 }) => {
     const inputContent = () => {
         switch (type) {
@@ -36,6 +38,7 @@ export const Input: React.FC<InputProps> = ({
                             },
                             classNames
                         )}
+                        {...register}
                     >
                         {children}
                     </select>
@@ -55,6 +58,7 @@ export const Input: React.FC<InputProps> = ({
                             },
                             className
                         )}
+                        {...register}
                     />
                 );
                 break;

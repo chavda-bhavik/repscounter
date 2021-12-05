@@ -1,0 +1,14 @@
+mutation AddExercise($data: AddExerciseType!) {
+    addExercise(data: $data) {
+        entity {
+            calories
+            id
+            name
+            target
+        }
+        errors {
+            field
+            message
+        }
+    }
+}
