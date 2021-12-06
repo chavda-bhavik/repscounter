@@ -1,28 +1,38 @@
 {
-  "name": "repscounter",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "12.0.3",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
-  "devDependencies": {
-    "@types/node": "16.11.7",
-    "@types/react": "17.0.34",
-    "autoprefixer": "^10.4.0",
-    "classnames": "^2.3.1",
-    "cypress": "^9.0.0",
-    "daisyui": "^1.16.2",
-    "eslint": "7",
-    "eslint-config-next": "12.0.3",
-    "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.19",
-    "typescript": "4.4.4"
-  }
+    "name": "repscounter",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "generate": "graphql-codegen",
+        "codegen": "graphql-codegen --config codegen.yml"
+    },
+    "dependencies": {
+        "@apollo/client": "^3.5.4",
+        "next": "12.0.3",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "react-hook-form": "^7.20.5"
+    },
+    "devDependencies": {
+        "@graphql-codegen/cli": "2.3.0",
+        "@graphql-codegen/introspection": "2.1.0",
+        "@graphql-codegen/typescript": "2.4.1",
+        "@graphql-codegen/typescript-operations": "^2.2.1",
+        "@graphql-codegen/typescript-react-apollo": "3.2.2",
+        "@types/node": "16.11.7",
+        "@types/react": "17.0.34",
+        "autoprefixer": "^10.4.0",
+        "classnames": "^2.3.1",
+        "cypress": "^9.0.0",
+        "daisyui": "^1.16.2",
+        "eslint": "7",
+        "eslint-config-next": "12.0.3",
+        "graphql": "^16.0.1",
+        "postcss": "^8.3.11",
+        "tailwindcss": "^2.2.19",
+        "typescript": "4.4.4"
+    }
 }

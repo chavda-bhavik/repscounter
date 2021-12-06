@@ -6,3 +6,10 @@ export type TagType = {
     color: string;
     name: string;
 };
+
+export type ExerciseType = {
+    id?: number;
+    name: string;
+    target?: string | null;
+    calories: number;
+};
