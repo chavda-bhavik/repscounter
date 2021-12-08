@@ -123,7 +123,7 @@ const Exercices: NextPage = () => {
             <Header />
             <MainContainer loading={loading}>
                 <ul className="menu bg-base-200 border-2 border-primary-dark py-3 shadow-lg rounded-box">
-                    <li className="menu-title">
+                    <li className="menu-title" data-cy="exercisesList">
                         <span>Exercises</span>
                     </li>
                     {data &&

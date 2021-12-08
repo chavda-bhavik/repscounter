@@ -61,6 +61,7 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                         })}
                         required
                         error={errors?.name?.message}
+                        dataCy="name"
                     />
                     <Input
                         type="select"
@@ -70,6 +71,7 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                             required: 'Target is required',
                         })}
                         error={errors?.target?.message}
+                        dataCy="target"
                     >
                         <option disabled value="">
                             Select Body Part
@@ -100,13 +102,20 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                                 ? errors?.calories.message || "Calories can't be less than 1"
                                 : undefined
                         }
+                        dataCy="calories"
                     />
                     <div className="modal-action">
-                        <Button type="submit" variant="primary" loading={submitLoading}>
+                        <Button
+                            dataCy="submit"
+                            type="submit"
+                            variant="primary"
+                            loading={submitLoading}
+                        >
                             Submit
                         </Button>
                         {selectedExercise && (
                             <Button
+                                dataCy="delete"
                                 variant="error"
                                 onClick={() => onDelete(selectedExercise.id!)}
                                 loading={deleteLoading}
@@ -114,7 +123,7 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                                 Delete
                             </Button>
                         )}
-                        <Button type="button" onClick={onClose}>
+                        <Button dataCy="cancel" type="button" onClick={onClose}>
                             Cancel
                         </Button>
                     </div>
