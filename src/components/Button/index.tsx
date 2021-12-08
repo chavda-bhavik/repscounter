@@ -8,6 +8,7 @@ interface ButtonProps {
     type?: 'button' | 'submit' | 'reset';
     variant?: 'primary' | 'error' | 'success' | 'warning' | 'info' | 'block' | 'link' | 'ghost';
     className?: string;
+    dataCy?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ export const Button: React.FC<ButtonProps> = ({
     type,
     className,
     variant,
+    dataCy,
 }) => {
     return (
         <button
@@ -42,6 +44,7 @@ export const Button: React.FC<ButtonProps> = ({
             type={type}
             disabled={disabled || loading}
             onClick={onClick}
+            data-cy={dataCy}
         >
             {children}
         </button>

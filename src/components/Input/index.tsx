@@ -11,6 +11,7 @@ interface InputProps {
     max?: number;
     error?: string;
     register?: any;
+    dataCy?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ export const Input: React.FC<InputProps> = ({
     required = false,
     children,
     error,
+    dataCy,
     register,
 }) => {
     const inputContent = () => {
@@ -38,6 +40,7 @@ export const Input: React.FC<InputProps> = ({
                             },
                             classNames
                         )}
+                        data-cy={dataCy}
                         {...register}
                     >
                         {children}
@@ -50,6 +53,7 @@ export const Input: React.FC<InputProps> = ({
                         placeholder={placeholder}
                         min={min}
                         max={max}
+                        data-cy={dataCy}
                         className={classNames(
                             'input input-bordered',
                             {
