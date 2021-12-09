@@ -13,3 +13,12 @@ export type ExerciseType = {
     target?: string | null;
     calories: number;
 };
+
+export type CountType = {
+    id?: number;
+    date: string;
+    reps: number;
+    sets: number;
+    exerciseId?: number;
+    exercise?: Partial<ExerciseType>;
+};

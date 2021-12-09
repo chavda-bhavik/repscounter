@@ -1,0 +1,14 @@
+mutation addCount($data: CountInput!) {
+    addCount(data: $data) {
+        errors {
+            message
+            field
+        }
+        entity {
+            id
+            date
+            sets
+            reps
+        }
+    }
+}

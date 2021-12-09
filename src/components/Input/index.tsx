@@ -12,6 +12,7 @@ interface InputProps {
     error?: string;
     register?: any;
     dataCy?: string;
+    defaultValue?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -25,6 +26,7 @@ export const Input: React.FC<InputProps> = ({
     children,
     error,
     dataCy,
+    defaultValue,
     register,
 }) => {
     const inputContent = () => {
@@ -54,6 +56,7 @@ export const Input: React.FC<InputProps> = ({
                         min={min}
                         max={max}
                         data-cy={dataCy}
+                        defaultValue={defaultValue}
                         className={classNames(
                             'input input-bordered',
                             {
