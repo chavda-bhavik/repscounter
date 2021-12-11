@@ -4,6 +4,7 @@ query counts($exerciseId: Int) {
         date
         sets
         reps
+        exerciseId
         exercise {
             name
         }

@@ -24,6 +24,7 @@ export type AddExerciseType = {
 export type Count = {
   date: Scalars['String'];
   exercise: Exercise;
+  exerciseId: Scalars['Float'];
   id: Scalars['Float'];
   reps: Scalars['Float'];
   sets: Scalars['Float'];
@@ -170,7 +171,7 @@ export type CountsQueryVariables = Exact<{
 }>;
 
 
-export type CountsQuery = { counts: Array<{ id: number, date: string, sets: number, reps: number, exercise: { name: string } }> };
+export type CountsQuery = { counts: Array<{ id: number, date: string, sets: number, reps: number, exerciseId: number, exercise: { name: string } }> };
 
 export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -427,6 +428,7 @@ export const CountsDocument = gql`
     date
     sets
     reps
+    exerciseId
     exercise {
       name
     }

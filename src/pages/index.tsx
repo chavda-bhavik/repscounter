@@ -138,7 +138,7 @@ const Home: NextPage = () => {
             <Header />
             <MainContainer loading={loading}>
                 <ul className="menu bg-primary-white border-2 border-primary-dark py-3 shadow-lg rounded-box">
-                    <li className="menu-title">
+                    <li className="menu-title" data-cy="countsList">
                         <span>01/01/2021 (Monday)</span>
                     </li>
                     {data?.counts.map((count) => (
