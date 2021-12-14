@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import {
     useCountsQuery,
@@ -10,18 +10,32 @@ import {
 
 import { CountType } from '@/interfaces';
 import { Exercise, Add, Header, AddCountModal, MainContainer } from '@/components';
+import { formatDateToString, groupBy } from '@/utils/helper';
+
+interface GrouppedCountType {
+    key: string;
+    value: CountType[];
+}
 
 const Home: NextPage = () => {
-    const [counts, setCounts] = useState<CountType[]>([]);
+    const [counts, setCounts] = useState<GrouppedCountType[]>([]);
     const [selectedCount, setSelectedCount] = useState<CountType>();
     const [addNew, setAddNew] = useState(false);
 
     const { data, loading, error } = useCountsQuery({
         skip: typeof window === undefined,
     });
-    const [addCount, { loading: addCountLoading }] = useAddCountMutation();
-    const [updateCount, { loading: updateCountLoading }] = useUpdateCountMutation();
-    const [deleteCount, { loading: deleteCountLoading }] = useDeleteCountMutation();
+    const [addCount] = useAddCountMutation();
+    const [updateCount] = useUpdateCountMutation();
+    const [deleteCount] = useDeleteCountMutation();
+
+    useEffect(() => {
+        if (data?.counts) {
+            // @ts-ignore
+            let newCounts = [...data.counts].sort((a, b) => new Date(a.date) - new Date(b.date));
+            setCounts(groupBy(newCounts, (item) => item.date));
+        }
+    }, [data?.counts]);
 
     const onCountSubmit = (count: CountType, exerciseName: string) => {
         if (selectedCount) {
@@ -45,10 +59,6 @@ const Home: NextPage = () => {
                                 if (c.id === data.updateCount.entity!.id) {
                                     return {
                                         ...data.updateCount.entity,
-                                        exercise: {
-                                            __typename: 'Exercise',
-                                            name: exerciseName,
-                                        },
                                     };
                                 }
                                 return c;
@@ -87,10 +97,6 @@ const Home: NextPage = () => {
                                         ...cacheCounts.counts,
                                         {
                                             ...data.addCount.entity,
-                                            exercise: {
-                                                __typename: 'Exercise',
-                                                name: exerciseName,
-                                            },
                                         },
                                     ],
                                 },
@@ -138,17 +144,24 @@ const Home: NextPage = () => {
             <Header />
             <MainContainer loading={loading}>
                 <ul className="menu bg-primary-white border-2 border-primary-dark py-3 shadow-lg rounded-box">
-                    <li className="menu-title" data-cy="countsList">
-                        <span>01/01/2021 (Monday)</span>
-                    </li>
-                    {data?.counts.map((count) => (
-                        <Exercise
-                            key={count.id}
-                            title={count.exercise.name}
-                            counts={`${count.sets} Sets x ${count.reps} Reps`}
-                            onClick={() => onClickCount(count)}
-                        />
-                    ))}
+                    {counts.reduce((data: any, count, i) => {
+                        data.push(
+                            <li className="menu-title" data-cy="countsList" key={count.key}>
+                                <span>{formatDateToString(count.key, 'DD/MM/YYYY', true)}</span>
+                            </li>
+                        );
+                        count.value.forEach((countItem) => {
+                            data.push(
+                                <Exercise
+                                    key={countItem.id}
+                                    title={countItem.exercise!.name!}
+                                    counts={`${countItem.sets} Sets x ${countItem.reps} Reps`}
+                                    onClick={() => onClickCount(countItem)}
+                                />
+                            );
+                        });
+                        return data;
+                    }, [])}
                 </ul>
             </MainContainer>
             <Add onClick={() => setAddNew(true)} />

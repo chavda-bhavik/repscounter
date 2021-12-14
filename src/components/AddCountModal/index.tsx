@@ -29,7 +29,7 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
         formState: { errors },
     } = useForm<CountType>({
         defaultValues: {
-            date: formatDateToString(new Date()),
+            date: formatDateToString(new Date(), 'YYYY-MM-DD'),
             sets: 1,
             reps: 10,
         },
@@ -41,7 +41,7 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
                 exerciseId: selectedCount.exerciseId,
                 sets: selectedCount.sets,
                 reps: selectedCount.reps,
-                date: formatDateToString(new Date(selectedCount.date)),
+                date: formatDateToString(new Date(selectedCount.date), 'YYYY-MM-DD'),
             });
         }
     }, [selectedCount, reset]);
@@ -68,6 +68,7 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
                         required
                         error={errors.date?.message}
                         register={register('date', { required: 'Date is required' })}
+                        dataCy="date"
                     />
                     <Input
                         type="select"
@@ -77,6 +78,7 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
                             required: 'Please select an exercise',
                         })}
                         error={errors.exerciseId?.message}
+                        dataCy="exercise"
                     >
                         <option disabled value="">
                             Select an Exercise
@@ -100,6 +102,7 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
                             min: 1,
                             max: 10,
                         })}
+                        dataCy="sets"
                     />
                     <Input
                         type="number"
@@ -114,21 +117,23 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
                             min: 1,
                             max: 100,
                         })}
+                        dataCy="reps"
                     />
                     <div className="modal-action">
-                        <Button type="submit" variant="primary">
+                        <Button type="submit" variant="primary" dataCy="submit">
                             Submit
                         </Button>
                         {selectedCount && (
                             <Button
                                 type="button"
                                 variant="error"
+                                dataCy="delete"
                                 onClick={() => onDelete(selectedCount.id!)}
                             >
                                 Delete
                             </Button>
                         )}
-                        <Button type="button" onClick={onClose}>
+                        <Button type="button" onClick={onClose} dataCy="cancel">
                             Cancel
                         </Button>
                     </div>

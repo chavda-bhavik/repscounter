@@ -127,7 +127,7 @@ export type AddCountMutationVariables = Exact<{
 }>;
 
 
-export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: number, date: string, sets: number, reps: number } | null | undefined } };
+export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: number, date: string, sets: number, reps: number, exerciseId: number, exercise: { name: string } } | null | undefined } };
 
 export type AddExerciseMutationVariables = Exact<{
   data: AddExerciseType;
@@ -141,7 +141,7 @@ export type DeleteCountMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCountMutation = { deleteCount: { id: number, date: string, sets: number, reps: number } };
+export type DeleteCountMutation = { deleteCount: { id: number, date: string, sets: number, reps: number, exerciseId: number, exercise: { name: string } } };
 
 export type DeleteExerciseMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -156,7 +156,7 @@ export type UpdateCountMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCountMutation = { updateCount: { entity?: { date: string, id: number, reps: number, sets: number } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
+export type UpdateCountMutation = { updateCount: { entity?: { id: number, date: string, sets: number, reps: number, exerciseId: number, exercise: { name: string } } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
 
 export type UpdateExerciseMutationVariables = Exact<{
   data: AddExerciseType;
@@ -191,6 +191,10 @@ export const AddCountDocument = gql`
       date
       sets
       reps
+      exerciseId
+      exercise {
+        name
+      }
     }
   }
 }
@@ -270,6 +274,10 @@ export const DeleteCountDocument = gql`
     date
     sets
     reps
+    exerciseId
+    exercise {
+      name
+    }
   }
 }
     `;
@@ -339,10 +347,14 @@ export const UpdateCountDocument = gql`
     mutation updateCount($data: CountInput!, $id: Int!) {
   updateCount(data: $data, id: $id) {
     entity {
-      date
       id
-      reps
+      date
       sets
+      reps
+      exerciseId
+      exercise {
+        name
+      }
     }
     errors {
       field
