@@ -1,0 +1,12 @@
+query counts($exerciseId: Int) {
+    counts(exerciseId: $exerciseId) {
+        id
+        date
+        sets
+        reps
+        exerciseId
+        exercise {
+            name
+        }
+    }
+}

@@ -1,0 +1,18 @@
+mutation updateCount($data: CountInput!, $id: Int!) {
+    updateCount(data: $data, id: $id) {
+        entity {
+            id
+            date
+            sets
+            reps
+            exerciseId
+            exercise {
+                name
+            }
+        }
+        errors {
+            field
+            message
+        }
+    }
+}

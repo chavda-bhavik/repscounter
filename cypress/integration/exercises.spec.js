@@ -1,25 +1,7 @@
 /// <reference types="Cypress" />
 
-let dummyExercisesData = {
-    data: {
-        exercises: [
-            {
-                id: 1,
-                name: 'Barbell Pull Up',
-                calories: 120,
-                target: 'Chest',
-                __typename: 'Exercise',
-            },
-            {
-                id: 2,
-                calories: 100,
-                name: 'Bench Press',
-                target: 'Chest',
-                __typename: 'Exercise',
-            },
-        ],
-    },
-};
+import { SERVER_URL } from '../constants';
+
 let newExerciseData = {
     name: 'Totally New Exercise',
     target: 'Leg',
@@ -29,7 +11,7 @@ let exerciseResponseData = {
     data: {
         addExercise: {
             entity: {
-                id: 3,
+                id: 6,
                 calories: newExerciseData.calories,
                 name: newExerciseData.name,
                 target: newExerciseData.target,
@@ -74,8 +56,9 @@ const deleteExerciseResponse = {
 
 describe('Exercises', () => {
     it('Should load exercises', () => {
-        cy.intercept('http://localhost:4000/graphql', dummyExercisesData);
+        cy.intercept(SERVER_URL, { fixture: 'exercise/exercises.json' }).as('exercises');
         cy.visit('http://localhost:3000/exercises');
+        cy.wait('@exercises');
         cy.get('[data-cy=exercisesList]', { timeout: 10000 }).should('be.visible');
     });
     it('Should create new exercise', () => {
