@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'wouter';
 import { Icon } from '..';
-import Link from 'next/link';
 
 interface HeaderProps {}
 

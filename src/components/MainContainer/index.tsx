@@ -1,3 +1,4 @@
+import React from 'react';
 import { Loader } from '..';
 import classNames from 'classnames';
 

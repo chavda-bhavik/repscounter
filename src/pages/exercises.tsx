@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import type { NextPage } from 'next';
+import React, { useState } from 'react';
 
 import { Exercise, Add, Header, ExerciseModal, MainContainer } from '@/components';
 import {
@@ -11,7 +10,7 @@ import {
 } from '@/generated/graphql';
 import { ExerciseType } from '@/interfaces';
 
-const Exercices: NextPage = () => {
+const Exercices: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedExercise, setSelectedExercise] = useState<ExerciseType>();
 

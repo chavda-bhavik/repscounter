@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
+import React, { useEffect, useState } from 'react';
 import {
     useCountsQuery,
     CountsDocument,
@@ -17,7 +16,7 @@ interface GrouppedCountType {
     value: CountType[];
 }
 
-const Home: NextPage = () => {
+const Home: React.FC = () => {
     const [counts, setCounts] = useState<GrouppedCountType[]>([]);
     const [selectedCount, setSelectedCount] = useState<CountType>();
     const [addNew, setAddNew] = useState(false);
