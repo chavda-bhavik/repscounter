@@ -21,15 +21,15 @@ export const AddCountModal: React.FC<AddCountModalProps> = ({
 }) => {
     return (
         <Backdrop show={show} onClose={onClose}>
-            <div className="modal-box pb-12">
-                <ul>
+            <div className="modal-box">
+                <ul className="sm:mb-10 md:mb-0">
                     {exercises &&
                         exercises.map((exercise) => (
                             <li
                                 key={exercise.id}
                                 onClick={() => onSelect && onSelect(exercise.id!)}
                                 className={classNames(
-                                    'flex items-center p-2 hover:bg-primary-highlight bg-opacity-20 transition-colors duration-500 hover:shadow-md rounded-box',
+                                    'flex items-center p-2 hover:bg-primary-highlight bg-opacity-20 transition-colors duration-500 hover:shadow-md rounded-box cursor-pointer',
                                     {
                                         'bg-success': exercise.id === selectedExerciseId,
                                     }

@@ -9,6 +9,7 @@ mutation addCount($data: CountInput!) {
             date
             sets
             reps
+            kg
             exerciseId
             exercise {
                 name

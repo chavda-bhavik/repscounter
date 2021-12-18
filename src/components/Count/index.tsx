@@ -3,11 +3,12 @@ import { CountType } from '@/interfaces';
 
 interface CountProps {
     count: CountType;
+    onChange: (countId: number, key: 'sets' | 'reps' | 'kg', value: string) => void;
     onDeleteClick: (id: number) => void;
-    onCountClick: (id: number) => void;
+    onCountClick: (countId: number, exerciseId: number) => void;
 }
 
-export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick }) => {
+export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick, onChange }) => {
     return (
         <tr className="hover:bg-primary-lighter cursor-pointer transition-colors delay-100 rounded-md text-center">
             <td className="p-2">
@@ -15,18 +16,43 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                     X
                 </button>
             </td>
-            <td className="p-2 text-lg font-medium" onClick={() => onCountClick(count.exerciseId!)}>
+            <td
+                className="p-2 text-lg font-medium"
+                onClick={() => onCountClick(count.id!, count.exerciseId!)}
+            >
                 {count.exercise?.name}
             </td>
             <td
-                className="p-2 focus:ring-2 ring-offset-2 ring-offset-green-500 ring-success"
+                className="p-2 text-lg font-medium"
                 contentEditable
+                suppressContentEditableWarning
                 placeholder="-"
-            ></td>
-            <td className="p-2" contentEditable placeholder="-">
+                onInput={(e) =>
+                    onChange(count.id!, 'kg', (e.target as HTMLTableCellElement).innerText)
+                }
+            >
+                {count.kg}
+            </td>
+            <td
+                className="p-2 text-lg font-medium"
+                contentEditable
+                suppressContentEditableWarning
+                placeholder="-"
+                onInput={(e) =>
+                    onChange(count.id!, 'reps', (e.target as HTMLTableCellElement).innerText)
+                }
+            >
                 {count.reps}
             </td>
-            <td className="p-2" contentEditable placeholder="-">
+            <td
+                className="p-2 text-lg font-medium"
+                contentEditable
+                suppressContentEditableWarning
+                placeholder="-"
+                onInput={(e) =>
+                    onChange(count.id!, 'sets', (e.target as HTMLTableCellElement).innerText)
+                }
+            >
                 {count.sets}
             </td>
         </tr>

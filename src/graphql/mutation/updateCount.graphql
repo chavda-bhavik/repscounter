@@ -5,6 +5,7 @@ mutation updateCount($data: CountInput!, $id: Int!) {
             date
             sets
             reps
+            kg
             exerciseId
             exercise {
                 name

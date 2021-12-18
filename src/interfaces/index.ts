@@ -17,8 +17,9 @@ export type ExerciseType = {
 export type CountType = {
     id?: number;
     date: string;
-    reps: number;
-    sets: number;
+    reps?: number | null;
+    sets?: number | null;
+    kg?: number | null;
     exerciseId?: number;
     exercise?: Partial<ExerciseType>;
 };

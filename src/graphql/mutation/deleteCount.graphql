@@ -4,6 +4,7 @@ mutation DeleteCount($id: Int!) {
         date
         sets
         reps
+        kg
         exerciseId
         exercise {
             name
