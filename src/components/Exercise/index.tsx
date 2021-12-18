@@ -1,20 +1,25 @@
 import React from 'react';
-import { Icon } from '..';
 
 interface ExerciseProps {
     title: string;
-    counts: string;
+    calories: number;
     onClick: () => void;
 }
 
-export const Exercise: React.FC<ExerciseProps> = ({ title, counts, onClick }) => {
+export const Exercise: React.FC<ExerciseProps> = ({ title, calories, onClick }) => {
     return (
-        <li className="hover:bg-primary-lighter transition-colors delay-100" onClick={onClick}>
-            <a className="flex flex-row">
-                <Icon icon="trophy" className="m-2" size="lg" />
+        <li
+            className="hover:bg-primary-lighter cursor-pointer transition-colors delay-100 rounded-md"
+            onClick={onClick}
+        >
+            <a className="flex flex-row p-3 items-center">
+                <div className="w-10 h-10 bg-green-500 rounded-full mr-2"></div>
                 <div className="w-full">
-                    <p className="text-lg font-semibold">{title}</p>
-                    <p className="text-base font-normal">{counts}</p>
+                    <p className="text-base my-0 font-semibold">
+                        {title}
+                        &nbsp;
+                        <span className="text-sm italic font-normal">({calories} Calories)</span>
+                    </p>
                 </div>
             </a>
         </li>

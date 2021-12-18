@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { ExerciseType } from '@/interfaces';
 import { useForm } from 'react-hook-form';
-import { Backdrop, Input, Button } from '..';
+
+import { Backdrop } from '../Backdrop';
+import { Input } from '../Input';
+import { Button } from '../Button';
 
 interface ExerciseModalProps {
     show: boolean;

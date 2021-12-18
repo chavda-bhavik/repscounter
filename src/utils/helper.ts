@@ -23,18 +23,3 @@ export const formatDateToString = (
     // returning formatted date
     return formattedDate;
 };
-
-export function groupBy(list: any, keyGetter: (item: any) => void) {
-    let map: any = new Map();
-    list.forEach((item: any) => {
-        const key = keyGetter(item);
-        const collection = map.get(key);
-        if (!collection) {
-            map.set(key, [item]);
-        } else {
-            collection.push(item);
-        }
-    });
-    map = Array.from(map, ([key, value]) => ({ key, value }));
-    return map;
-}

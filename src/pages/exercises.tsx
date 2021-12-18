@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-import { Exercise, Add, Header, ExerciseModal, MainContainer } from '@/components';
+import { Exercise } from '@/components/Exercise';
+import { Add } from '@/components/Add';
+import { Header } from '@/components/Header';
+import { ExerciseModal } from '@/components/ExerciseModal';
+import { MainContainer } from '@/components/MainContainer';
 import {
     useAddExerciseMutation,
     useExercisesQuery,
@@ -121,10 +125,7 @@ const Exercices: React.FC = () => {
         <>
             <Header />
             <MainContainer loading={loading}>
-                <ul className="menu bg-base-200 border-2 border-primary-dark py-3 shadow-lg rounded-box">
-                    <li className="menu-title" data-cy="exercisesList">
-                        <span>Exercises</span>
-                    </li>
+                <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
                     {data &&
                         data.exercises &&
                         data.exercises.map((exercise) => (
@@ -132,7 +133,7 @@ const Exercices: React.FC = () => {
                                 onClick={() => onExerciseClick(exercise)}
                                 key={exercise.id}
                                 title={exercise.name}
-                                counts={`Burns ${exercise.calories} Calories`}
+                                calories={exercise.calories}
                             />
                         ))}
                 </ul>

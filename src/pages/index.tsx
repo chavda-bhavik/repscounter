@@ -1,111 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     useCountsQuery,
     CountsDocument,
     useAddCountMutation,
     useDeleteCountMutation,
     useUpdateCountMutation,
+    useExercisesQuery,
 } from '@/generated/graphql';
 
 import { CountType } from '@/interfaces';
-import { Exercise, Add, Header, AddCountModal, MainContainer } from '@/components';
-import { formatDateToString, groupBy } from '@/utils/helper';
-
-interface GrouppedCountType {
-    key: string;
-    value: CountType[];
-}
+import { Header } from '@/components/Header';
+import { Count } from '@/components/Count';
+import { AddCountModal } from '@/components/AddCountModal';
+import { MainContainer } from '@/components/MainContainer';
+import { Icon } from '@/components/Icon';
 
 const Home: React.FC = () => {
-    const [counts, setCounts] = useState<GrouppedCountType[]>([]);
-    const [selectedCount, setSelectedCount] = useState<CountType>();
+    const [selectedExerciseId, setSelectedExerciseId] = useState<number>();
     const [addNew, setAddNew] = useState(false);
 
-    const { data, loading, error } = useCountsQuery({
-        skip: typeof window === undefined,
-    });
+    const { data: countsData, loading } = useCountsQuery();
+    const { data: exercisesData } = useExercisesQuery();
     const [addCount] = useAddCountMutation();
     const [updateCount] = useUpdateCountMutation();
     const [deleteCount] = useDeleteCountMutation();
 
-    useEffect(() => {
-        if (data?.counts) {
-            // @ts-ignore
-            let newCounts = [...data.counts].sort((a, b) => new Date(a.date) - new Date(b.date));
-            setCounts(groupBy(newCounts, (item) => item.date));
-        }
-    }, [data?.counts]);
-
-    const onCountSubmit = (count: CountType, exerciseName: string) => {
-        if (selectedCount) {
-            updateCount({
-                variables: {
-                    id: Number(selectedCount.id!),
-                    data: {
-                        ...count,
-                        sets: Number(count.sets),
-                        reps: Number(count.reps),
-                        exerciseId: Number(count.exerciseId),
-                    },
+    const onCountUpdate = (countId: number, exerciseId: number, sets = null, reps = null) => {
+        // updateCount({
+        //     variables: {
+        //         id: Number(selectedCount.id!),
+        //         data: {
+        //             ...count,
+        //             sets: Number(count.sets),
+        //             reps: Number(count.reps),
+        //             exerciseId: Number(count.exerciseId),
+        //         },
+        //     },
+        //     update: (cache, { data }) => {
+        //         if (data && data.updateCount && data.updateCount.entity) {
+        //             const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
+        //                 query: CountsDocument,
+        //             });
+        //             if (cacheCounts) {
+        //                 const newCounts = cacheCounts.counts.map((c) => {
+        //                     if (c.id === data.updateCount.entity!.id) {
+        //                         return {
+        //                             ...data.updateCount.entity,
+        //                         };
+        //                     }
+        //                     return c;
+        //                 });
+        //                 cache.writeQuery({
+        //                     query: CountsDocument,
+        //                     data: {
+        //                         counts: newCounts,
+        //                     },
+        //                 });
+        //             }
+        //         }
+        //     },
+        // });
+        onCloseModal();
+    };
+    const onAddCount = (exerciseId: number) => {
+        addCount({
+            variables: {
+                data: {
+                    date: new Date().toISOString(),
+                    exerciseId: Number(exerciseId),
                 },
-                update: (cache, { data }) => {
-                    if (data && data.updateCount && data.updateCount.entity) {
-                        const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
+            },
+            update: (cache, { data }) => {
+                if (data && data.addCount && data.addCount.entity) {
+                    const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
+                        query: CountsDocument,
+                    });
+                    if (cacheCounts) {
+                        cache.writeQuery({
                             query: CountsDocument,
+                            data: {
+                                counts: [
+                                    ...cacheCounts.counts,
+                                    {
+                                        ...data.addCount.entity,
+                                    },
+                                ],
+                            },
                         });
-                        if (cacheCounts) {
-                            const newCounts = cacheCounts.counts.map((c) => {
-                                if (c.id === data.updateCount.entity!.id) {
-                                    return {
-                                        ...data.updateCount.entity,
-                                    };
-                                }
-                                return c;
-                            });
-                            cache.writeQuery({
-                                query: CountsDocument,
-                                data: {
-                                    counts: newCounts,
-                                },
-                            });
-                        }
                     }
-                },
-            });
-            onCloseModal();
-        } else {
-            addCount({
-                variables: {
-                    data: {
-                        ...count,
-                        sets: Number(count.sets),
-                        reps: Number(count.reps),
-                        exerciseId: Number(count.exerciseId),
-                    },
-                },
-                update: (cache, { data }) => {
-                    if (data && data.addCount && data.addCount.entity) {
-                        const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
-                            query: CountsDocument,
-                        });
-                        if (cacheCounts) {
-                            cache.writeQuery({
-                                query: CountsDocument,
-                                data: {
-                                    counts: [
-                                        ...cacheCounts.counts,
-                                        {
-                                            ...data.addCount.entity,
-                                        },
-                                    ],
-                                },
-                            });
-                        }
-                    }
-                },
-            });
-            onCloseModal();
-        }
+                }
+            },
+        });
+        onCloseModal();
     };
     const onCountDelete = (id: number) => {
         deleteCount({
@@ -130,46 +116,65 @@ const Home: React.FC = () => {
             },
         });
     };
-    const onClickCount = (count: CountType) => {
-        setSelectedCount(count);
+    const onCountClick = (exerciseId: number) => {
+        setSelectedExerciseId(exerciseId);
         setAddNew(true);
     };
     const onCloseModal = () => {
+        setSelectedExerciseId(undefined);
         setAddNew(false);
-        setSelectedCount(undefined);
+    };
+    const onExerciseSelect = (exerciseId: number) => {
+        if (selectedExerciseId) {
+            // update count
+        } else {
+            onAddCount(exerciseId);
+        }
     };
     return (
         <>
             <Header />
             <MainContainer loading={loading}>
-                <ul className="menu bg-primary-white border-2 border-primary-dark py-3 shadow-lg rounded-box">
-                    {counts.reduce((data: any, count, i) => {
-                        data.push(
-                            <li className="menu-title" data-cy="countsList" key={count.key}>
-                                <span>{formatDateToString(count.key, 'DD/MM/YYYY', true)}</span>
-                            </li>
-                        );
-                        count.value.forEach((countItem) => {
-                            data.push(
-                                <Exercise
-                                    key={countItem.id}
-                                    title={countItem.exercise!.name!}
-                                    counts={`${countItem.sets} Sets x ${countItem.reps} Reps`}
-                                    onClick={() => onClickCount(countItem)}
-                                />
-                            );
-                        });
-                        return data;
-                    }, [])}
-                </ul>
+                <table className="w-full bg-primary-white rounded-t-box py-3 shadow-lg rounded-box">
+                    <thead>
+                        <tr className="bg-primary-dark text-white rounded-t-box">
+                            <th className="p-2 rounded-tl-xl"></th>
+                            <th className="p-2">Exercise</th>
+                            <th className="p-2">KG</th>
+                            <th className="p-2">Sets</th>
+                            <th className="p-2 rounded-tr-xl">Reps</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-solid divide-gray-300 divide-y">
+                        {countsData?.counts.map((countItem) => (
+                            <Count
+                                key={countItem.id}
+                                count={countItem}
+                                onDeleteClick={onCountDelete}
+                                onCountClick={onCountClick}
+                            />
+                        ))}
+                    </tbody>
+                </table>
             </MainContainer>
-            <Add onClick={() => setAddNew(true)} />
+
+            <button
+                onClick={() => setAddNew(true)}
+                className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
+                data-cy="add"
+            >
+                <Icon
+                    icon="plus"
+                    className="text-primary-highlight group-hover:text-primary-dark"
+                    size="lg"
+                />
+            </button>
             <AddCountModal
                 show={addNew}
                 onClose={onCloseModal}
-                onSubmit={onCountSubmit}
-                onDelete={onCountDelete}
-                selectedCount={selectedCount}
+                onSelect={onExerciseSelect}
+                selectedExerciseId={selectedExerciseId}
+                exercises={exercisesData?.exercises}
             />
         </>
     );

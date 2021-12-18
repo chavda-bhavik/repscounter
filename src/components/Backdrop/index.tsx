@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { toggleOverflowHidden } from '@/utils/helper';
 import classNames from 'classnames';
-import { Icon } from '..';
+
+import { Icon } from '../Icon';
+import { toggleOverflowHidden } from '@/utils/helper';
 
 interface BackdropProps {
     show: boolean;

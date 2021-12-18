@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { Icon } from '..';
+import { Icon } from '../Icon';
 
 interface HeaderProps {}
 
