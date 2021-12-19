@@ -8,6 +8,7 @@ mutation updateCount($data: CountInput!, $id: Int!) {
             kg
             exerciseId
             exercise {
+                id
                 name
             }
         }

@@ -12,6 +12,7 @@ mutation addCount($data: CountInput!) {
             kg
             exerciseId
             exercise {
+                id
                 name
             }
         }

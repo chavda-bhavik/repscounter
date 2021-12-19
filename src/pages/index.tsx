@@ -12,7 +12,7 @@ import {
 import { CountType } from '@/interfaces';
 import { Header } from '@/components/Header';
 import { Count } from '@/components/Count';
-import { AddCountModal } from '@/components/AddCountModal';
+import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
 import { Icon } from '@/components/Icon';
 
@@ -24,14 +24,14 @@ interface UpdateCountData {
 
 const Home: React.FC = () => {
     const [showExercises, setShowExercises] = useState(false);
-    const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
     const [selectedExerciseId, setSelectedExerciseId] = useState<number>();
+    const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
 
-    const { data: countsData, loading } = useCountsQuery();
-    const { data: exercisesData } = useExercisesQuery();
     const [addCount] = useAddCountMutation();
-    const [updateCount] = useUpdateCountMutation();
     const [deleteCount] = useDeleteCountMutation();
+    const [updateCount] = useUpdateCountMutation();
+    const { data: exercisesData } = useExercisesQuery();
+    const { data: countsData, loading } = useCountsQuery();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -178,21 +178,21 @@ const Home: React.FC = () => {
         <>
             <Header />
             <MainContainer loading={loading}>
-                <table className="w-full bg-primary-white rounded-t-box py-3 shadow-lg rounded-box">
+                <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>
-                        <tr className="bg-primary-dark text-white rounded-t-box">
-                            <th className="p-2 rounded-tl-xl" style={{ width: '15%' }}></th>
-                            <th className="p-2" style={{ width: '40%' }}>
+                        <tr className="bg-primary-dark text-white">
+                            <th className="p-2 rounded-tl-xl" style={{ width: '10%' }}></th>
+                            <th className="p-2" style={{ width: '45%' }}>
                                 Exercise
                             </th>
                             <th className="p-2" style={{ width: '15%' }}>
-                                KG
+                                Sets
                             </th>
                             <th className="p-2" style={{ width: '15%' }}>
                                 Reps
                             </th>
                             <th className="p-2 rounded-tr-xl" style={{ width: '15%' }}>
-                                Sets
+                                KG
                             </th>
                         </tr>
                     </thead>
@@ -209,7 +209,6 @@ const Home: React.FC = () => {
                     </tbody>
                 </table>
             </MainContainer>
-
             <button
                 onClick={() => setShowExercises(true)}
                 className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
@@ -221,7 +220,7 @@ const Home: React.FC = () => {
                     size="lg"
                 />
             </button>
-            <AddCountModal
+            <CountExercisesModal
                 show={showExercises}
                 onClose={onCloseModal}
                 onSelect={onExerciseSelect}

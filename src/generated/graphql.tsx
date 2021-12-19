@@ -129,7 +129,7 @@ export type AddCountMutationVariables = Exact<{
 }>;
 
 
-export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { name: string } } | null | undefined } };
+export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } | null | undefined } };
 
 export type AddExerciseMutationVariables = Exact<{
   data: AddExerciseType;
@@ -143,7 +143,7 @@ export type DeleteCountMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCountMutation = { deleteCount: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { name: string } } };
+export type DeleteCountMutation = { deleteCount: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } };
 
 export type DeleteExerciseMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -158,7 +158,7 @@ export type UpdateCountMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCountMutation = { updateCount: { entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { name: string } } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
+export type UpdateCountMutation = { updateCount: { entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
 
 export type UpdateExerciseMutationVariables = Exact<{
   data: AddExerciseType;
@@ -173,7 +173,7 @@ export type CountsQueryVariables = Exact<{
 }>;
 
 
-export type CountsQuery = { counts: Array<{ id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { name: string } }> };
+export type CountsQuery = { counts: Array<{ id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } }> };
 
 export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -196,6 +196,7 @@ export const AddCountDocument = gql`
       kg
       exerciseId
       exercise {
+        id
         name
       }
     }
@@ -280,6 +281,7 @@ export const DeleteCountDocument = gql`
     kg
     exerciseId
     exercise {
+      id
       name
     }
   }
@@ -358,6 +360,7 @@ export const UpdateCountDocument = gql`
       kg
       exerciseId
       exercise {
+        id
         name
       }
     }
@@ -448,6 +451,7 @@ export const CountsDocument = gql`
     kg
     exerciseId
     exercise {
+      id
       name
     }
   }

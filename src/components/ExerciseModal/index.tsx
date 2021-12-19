@@ -52,86 +52,79 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
 
     return (
         <Backdrop show={show} onClose={onClose}>
-            <div className="modal-box pb-12 sm:pb-6">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <h3 className="display-3">{selectedExercise ? 'Edit' : 'Add'} Exercise</h3>
-                    <Input
-                        type="text"
-                        label="Exercise Name"
-                        placeholder="Barbell Bench Press"
-                        register={register('name', {
-                            required: 'Exercise name is required',
-                        })}
-                        required
-                        error={errors?.name?.message}
-                        dataCy="name"
-                    />
-                    <Input
-                        type="select"
-                        label="Target"
-                        required
-                        register={register('target', {
-                            required: 'Target is required',
-                        })}
-                        error={errors?.target?.message}
-                        dataCy="target"
-                    >
-                        <option disabled value="">
-                            Select Body Part
-                        </option>
-                        <option>Leg</option>
-                        <option>Chest</option>
-                        <option>Bieceps</option>
-                        <option>Tieceps</option>
-                        <option>Back</option>
-                        <option>Shoulders</option>
-                        <option>Arms</option>
-                        <option>Abs</option>
-                        <option>Core</option>
-                        <option>Cardio</option>
-                        <option>Other</option>
-                    </Input>
-                    <Input
-                        type="number"
-                        label="Calories Burn"
-                        required
-                        placeholder="120"
-                        register={register('calories', {
-                            required: 'Calories is required',
-                            min: 1,
-                        })}
-                        error={
-                            errors?.calories
-                                ? errors?.calories.message || "Calories can't be less than 1"
-                                : undefined
-                        }
-                        dataCy="calories"
-                    />
-                    <div className="modal-action">
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <h3 className="display-3">{selectedExercise ? 'Edit' : 'Add'} Exercise</h3>
+                <Input
+                    type="text"
+                    label="Exercise Name"
+                    placeholder="Barbell Bench Press"
+                    register={register('name', {
+                        required: 'Exercise name is required',
+                    })}
+                    required
+                    error={errors?.name?.message}
+                    dataCy="name"
+                />
+                <Input
+                    type="select"
+                    label="Target"
+                    required
+                    register={register('target', {
+                        required: 'Target is required',
+                    })}
+                    error={errors?.target?.message}
+                    dataCy="target"
+                >
+                    <option disabled value="">
+                        Select Body Part
+                    </option>
+                    <option>Leg</option>
+                    <option>Chest</option>
+                    <option>Bieceps</option>
+                    <option>Tieceps</option>
+                    <option>Back</option>
+                    <option>Shoulders</option>
+                    <option>Arms</option>
+                    <option>Abs</option>
+                    <option>Core</option>
+                    <option>Cardio</option>
+                    <option>Other</option>
+                </Input>
+                <Input
+                    type="number"
+                    label="Calories Burn"
+                    required
+                    placeholder="120"
+                    register={register('calories', {
+                        required: 'Calories is required',
+                        min: 1,
+                    })}
+                    error={
+                        errors?.calories
+                            ? errors?.calories.message || "Calories can't be less than 1"
+                            : undefined
+                    }
+                    dataCy="calories"
+                />
+                <div className="modal-action">
+                    <Button dataCy="submit" type="submit" variant="primary" loading={submitLoading}>
+                        Submit
+                    </Button>
+                    {selectedExercise && (
                         <Button
-                            dataCy="submit"
-                            type="submit"
-                            variant="primary"
-                            loading={submitLoading}
+                            dataCy="delete"
+                            variant="error"
+                            onClick={() => onDelete(selectedExercise.id!)}
+                            loading={deleteLoading}
                         >
-                            Submit
+                            Delete
                         </Button>
-                        {selectedExercise && (
-                            <Button
-                                dataCy="delete"
-                                variant="error"
-                                onClick={() => onDelete(selectedExercise.id!)}
-                                loading={deleteLoading}
-                            >
-                                Delete
-                            </Button>
-                        )}
-                        <Button dataCy="cancel" type="button" onClick={onClose}>
-                            Cancel
-                        </Button>
-                    </div>
-                </form>
-            </div>
+                    )}
+                    <Button dataCy="cancel" type="button" onClick={onClose}>
+                        Cancel
+                    </Button>
+                </div>
+            </form>
         </Backdrop>
     );
 };

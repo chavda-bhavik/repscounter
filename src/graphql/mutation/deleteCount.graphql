@@ -7,6 +7,7 @@ mutation DeleteCount($id: Int!) {
         kg
         exerciseId
         exercise {
+            id
             name
         }
     }
