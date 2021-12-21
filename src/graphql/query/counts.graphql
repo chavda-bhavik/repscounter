@@ -1,13 +1,10 @@
-query counts($exerciseId: Int) {
-    counts(exerciseId: $exerciseId) {
+query counts($exerciseId: Int, $date: DateTime) {
+    counts(exerciseId: $exerciseId, date: $date) {
         id
         date
         sets
         reps
-        kg
-        exerciseId
         exercise {
-            id
             name
         }
     }

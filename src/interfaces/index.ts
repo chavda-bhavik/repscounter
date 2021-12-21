@@ -1,4 +1,11 @@
-export type IconsType = 'anchor' | 'dashboard' | 'taskList' | 'trophy' | 'plus' | 'close';
+export type IconsType =
+    | 'anchor'
+    | 'dashboard'
+    | 'taskList'
+    | 'trophy'
+    | 'plus'
+    | 'close'
+    | 'calendarF';
 
 export type IconsSizesType = 'sm' | 'md' | 'lg';
 

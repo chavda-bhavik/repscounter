@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-    useCountsQuery,
     CountsDocument,
     useAddCountMutation,
     useDeleteCountMutation,
     useUpdateCountMutation,
     useExercisesQuery,
     CountInput,
+    useCountsLazyQuery,
 } from '@/generated/graphql';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import { CountType } from '@/interfaces';
 import { Header } from '@/components/Header';
@@ -15,6 +17,7 @@ import { Count } from '@/components/Count';
 import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
 import { Icon } from '@/components/Icon';
+import { Backdrop } from '@/components/Backdrop';
 
 interface UpdateCountData {
     countId: number;
@@ -26,12 +29,22 @@ const Home: React.FC = () => {
     const [showExercises, setShowExercises] = useState(false);
     const [selectedExerciseId, setSelectedExerciseId] = useState<number>();
     const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [date, setDate] = useState(new Date());
 
     const [addCount] = useAddCountMutation();
     const [deleteCount] = useDeleteCountMutation();
     const [updateCount] = useUpdateCountMutation();
     const { data: exercisesData } = useExercisesQuery();
-    const { data: countsData, loading } = useCountsQuery();
+    const [getCounts, { loading, data: countsData }] = useCountsLazyQuery();
+
+    useEffect(() => {
+        getCounts({
+            variables: {
+                date: date.toISOString().split('T')[0],
+            },
+        });
+    }, [date]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -91,28 +104,27 @@ const Home: React.FC = () => {
         addCount({
             variables: {
                 data: {
-                    date: new Date().toISOString(),
+                    date: date.toISOString(),
                     exerciseId: Number(exerciseId),
                 },
             },
             update: (cache, { data }) => {
                 if (data && data.addCount && data.addCount.entity) {
+                    debugger;
                     const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
                         query: CountsDocument,
                     });
-                    if (cacheCounts) {
-                        cache.writeQuery({
-                            query: CountsDocument,
-                            data: {
-                                counts: [
-                                    ...cacheCounts.counts,
-                                    {
-                                        ...data.addCount.entity,
-                                    },
-                                ],
-                            },
-                        });
+                    let newCounts: CountType[] = [{ ...data.addCount.entity }];
+                    if (cacheCounts && cacheCounts.counts) {
+                        newCounts = [...cacheCounts.counts, { ...data.addCount.entity }];
                     }
+                    console.log(newCounts);
+                    cache.writeQuery({
+                        query: CountsDocument,
+                        data: {
+                            counts: [...newCounts],
+                        },
+                    });
                 }
             },
         });
@@ -151,6 +163,7 @@ const Home: React.FC = () => {
     };
     const onCloseModal = () => {
         setSelectedExerciseId(undefined);
+        setShowCalendar(false);
         setShowExercises(false);
     };
     const onExerciseSelect = (exerciseId: number) => {
@@ -173,6 +186,10 @@ const Home: React.FC = () => {
             key,
             value: Number(value),
         });
+    };
+    const onDateChange = (date: Date) => {
+        setDate(date);
+        onCloseModal();
     };
     return (
         <>
@@ -211,7 +228,7 @@ const Home: React.FC = () => {
             </MainContainer>
             <button
                 onClick={() => setShowExercises(true)}
-                className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
+                className="bg-primary-dark rounded-full fixed bottom-5 right-20 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
                 data-cy="add"
             >
                 <Icon
@@ -220,6 +237,18 @@ const Home: React.FC = () => {
                     size="lg"
                 />
             </button>
+            <button
+                onClick={() => setShowCalendar(true)}
+                className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-2 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
+                data-cy="calendar"
+            >
+                <Icon
+                    icon="calendarF"
+                    className="text-primary-highlight group-hover:text-primary-dark"
+                    size="md"
+                />
+            </button>
+
             <CountExercisesModal
                 show={showExercises}
                 onClose={onCloseModal}
@@ -227,6 +256,10 @@ const Home: React.FC = () => {
                 selectedExerciseId={selectedExerciseId}
                 exercises={exercisesData?.exercises}
             />
+
+            <Backdrop show={showCalendar} onClose={onCloseModal}>
+                <Calendar maxDate={new Date()} value={date} onChange={onDateChange} />
+            </Backdrop>
         </>
     );
 };

@@ -13,6 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type AddExerciseType = {
@@ -116,6 +118,7 @@ export type QueryCountArgs = {
 
 
 export type QueryCountsArgs = {
+  date?: InputMaybe<Scalars['DateTime']>;
   exerciseId?: InputMaybe<Scalars['Int']>;
 };
 
@@ -170,10 +173,11 @@ export type UpdateExerciseMutation = { updateExercise: { errors?: Array<{ field:
 
 export type CountsQueryVariables = Exact<{
   exerciseId?: InputMaybe<Scalars['Int']>;
+  date?: InputMaybe<Scalars['DateTime']>;
 }>;
 
 
-export type CountsQuery = { counts: Array<{ id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } }> };
+export type CountsQuery = { counts: Array<{ id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, exercise: { name: string } }> };
 
 export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -442,16 +446,13 @@ export type UpdateExerciseMutationHookResult = ReturnType<typeof useUpdateExerci
 export type UpdateExerciseMutationResult = Apollo.MutationResult<UpdateExerciseMutation>;
 export type UpdateExerciseMutationOptions = Apollo.BaseMutationOptions<UpdateExerciseMutation, UpdateExerciseMutationVariables>;
 export const CountsDocument = gql`
-    query counts($exerciseId: Int) {
-  counts(exerciseId: $exerciseId) {
+    query counts($exerciseId: Int, $date: DateTime) {
+  counts(exerciseId: $exerciseId, date: $date) {
     id
     date
     sets
     reps
-    kg
-    exerciseId
     exercise {
-      id
       name
     }
   }
@@ -471,6 +472,7 @@ export const CountsDocument = gql`
  * const { data, loading, error } = useCountsQuery({
  *   variables: {
  *      exerciseId: // value for 'exerciseId'
+ *      date: // value for 'date'
  *   },
  * });
  */
