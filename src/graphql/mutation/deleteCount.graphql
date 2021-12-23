@@ -1,14 +1,5 @@
 mutation DeleteCount($id: Int!) {
     deleteCount(id: $id) {
-        id
-        date
-        sets
-        reps
-        kg
-        exerciseId
-        exercise {
-            id
-            name
-        }
+        ...CountFields
     }
 }

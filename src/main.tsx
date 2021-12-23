@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import client from './client';
-import { ApolloProvider } from '@apollo/client';
+import store from '@/store';
+import { Provider } from 'react-redux';
 import './styles/globals.css';
 
 ReactDOM.render(
     <React.StrictMode>
-        <ApolloProvider client={client}>
+        <Provider store={store}>
             <App />
-        </ApolloProvider>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

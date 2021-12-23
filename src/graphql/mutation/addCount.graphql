@@ -5,16 +5,7 @@ mutation addCount($data: CountInput!) {
             field
         }
         entity {
-            id
-            date
-            sets
-            reps
-            kg
-            exerciseId
-            exercise {
-                id
-                name
-            }
+            ...CountFields
         }
     }
 }

@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-    CountsDocument,
-    useAddCountMutation,
-    useDeleteCountMutation,
-    useUpdateCountMutation,
-    useExercisesQuery,
-    CountInput,
-    useCountsLazyQuery,
-} from '@/generated/graphql';
+import { CountInput } from '@/generated/graphql';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-import { CountType } from '@/interfaces';
 import { Header } from '@/components/Header';
 import { Count } from '@/components/Count';
 import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
 import { Icon } from '@/components/Icon';
 import { Backdrop } from '@/components/Backdrop';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { fetchCounts, addCount, updateCount, removeCount } from '@/store/counts/Actions';
 
 interface UpdateCountData {
     countId: number;
@@ -32,18 +25,11 @@ const Home: React.FC = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
 
-    const [addCount] = useAddCountMutation();
-    const [deleteCount] = useDeleteCountMutation();
-    const [updateCount] = useUpdateCountMutation();
-    const { data: exercisesData } = useExercisesQuery();
-    const [getCounts, { loading, data: countsData }] = useCountsLazyQuery();
+    const { counts, loading, errorMessage } = useAppSelector((state) => state.count);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getCounts({
-            variables: {
-                date: date.toISOString().split('T')[0],
-            },
-        });
+        dispatch(fetchCounts(date.toISOString()));
     }, [date]);
 
     useEffect(() => {
@@ -68,90 +54,15 @@ const Home: React.FC = () => {
         let data: CountInput = {
             [key]: value,
         };
-        // update count on backend
-        updateCount({
-            variables: {
-                id: Number(countId),
-                data,
-            },
-            update: (cache, { data }) => {
-                if (data && data.updateCount && data.updateCount.entity) {
-                    const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
-                        query: CountsDocument,
-                    });
-                    if (cacheCounts) {
-                        const newCounts = cacheCounts.counts.map((c) => {
-                            if (c.id === data.updateCount.entity!.id) {
-                                return {
-                                    ...data.updateCount.entity,
-                                };
-                            }
-                            return c;
-                        });
-                        cache.writeQuery({
-                            query: CountsDocument,
-                            data: {
-                                counts: newCounts,
-                            },
-                        });
-                    }
-                }
-            },
-        });
+        dispatch(updateCount(countId, key, value));
         onCloseModal();
     };
     const onAddCount = (exerciseId: number) => {
-        addCount({
-            variables: {
-                data: {
-                    date: date.toISOString(),
-                    exerciseId: Number(exerciseId),
-                },
-            },
-            update: (cache, { data }) => {
-                if (data && data.addCount && data.addCount.entity) {
-                    debugger;
-                    const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
-                        query: CountsDocument,
-                    });
-                    let newCounts: CountType[] = [{ ...data.addCount.entity }];
-                    if (cacheCounts && cacheCounts.counts) {
-                        newCounts = [...cacheCounts.counts, { ...data.addCount.entity }];
-                    }
-                    console.log(newCounts);
-                    cache.writeQuery({
-                        query: CountsDocument,
-                        data: {
-                            counts: [...newCounts],
-                        },
-                    });
-                }
-            },
-        });
+        addCount(exerciseId);
         onCloseModal();
     };
     const onCountDelete = (id: number) => {
-        deleteCount({
-            variables: {
-                id,
-            },
-            update: (cache, { data }) => {
-                if (data && data.deleteCount && data.deleteCount) {
-                    const cacheCounts = cache.readQuery<{ counts: CountType[] }>({
-                        query: CountsDocument,
-                    });
-                    if (cacheCounts) {
-                        cache.writeQuery({
-                            query: CountsDocument,
-                            data: {
-                                counts: cacheCounts.counts.filter((c) => c.id !== id),
-                            },
-                        });
-                    }
-                }
-                onCloseModal();
-            },
-        });
+        dispatch(removeCount(id));
     };
     const onCountClick = (countId: number, exerciseId: number) => {
         setUpdateCountData({
@@ -194,7 +105,7 @@ const Home: React.FC = () => {
     return (
         <>
             <Header />
-            <MainContainer loading={loading}>
+            <MainContainer loading={false}>
                 <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>
                         <tr className="bg-primary-dark text-white">
@@ -214,7 +125,7 @@ const Home: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-solid divide-gray-300 divide-y">
-                        {countsData?.counts.map((countItem) => (
+                        {counts.map((countItem) => (
                             <Count
                                 key={countItem.id}
                                 count={countItem}
@@ -254,7 +165,7 @@ const Home: React.FC = () => {
                 onClose={onCloseModal}
                 onSelect={onExerciseSelect}
                 selectedExerciseId={selectedExerciseId}
-                exercises={exercisesData?.exercises}
+                exercises={[]}
             />
 
             <Backdrop show={showCalendar} onClose={onCloseModal}>
