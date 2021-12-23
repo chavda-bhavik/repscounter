@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { CountInput } from '@/generated/graphql';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -12,6 +11,8 @@ import { Backdrop } from '@/components/Backdrop';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { fetchCounts, addCount, updateCount, removeCount } from '@/store/counts/Actions';
 import { fetchExercises } from '@/store/exercises/Actions';
+import { useKeyPress } from '@/hooks/useKeyPress';
+import { FixedButton } from '@/components/FixedButton';
 
 interface UpdateCountData {
     countId: number;
@@ -25,17 +26,32 @@ const Home: React.FC = () => {
     const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
-
+    // keyPress hooks
+    const addClicked = useKeyPress({ userKeys: ['+'] });
+    const escapClicked = useKeyPress({ userKeys: ['Escape'] });
+    const slashClicked = useKeyPress({ userKeys: ['/'] });
+    // store hooks
     const { counts, loading, errorMessage } = useAppSelector((state) => state.count);
     const { exercises } = useAppSelector((state) => state.exercise);
     const dispatch = useAppDispatch();
 
+    // effect to fetch exercises
     useEffect(() => {
         dispatch(fetchExercises());
     }, []);
+    // effect to fetch counts on date change
     useEffect(() => {
         dispatch(fetchCounts(date.toISOString()));
     }, [date]);
+    // effect to run on key press
+    useEffect(() => {
+        if (addClicked && !showExercises && !showCalendar && !updateCountData)
+            setShowExercises(true);
+        if (escapClicked && showExercises) setShowExercises(false);
+        if (escapClicked && showCalendar) setShowCalendar(false);
+        if (slashClicked && !showExercises && !showCalendar && !updateCountData)
+            setShowCalendar(true);
+    }, [addClicked, escapClicked, slashClicked]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -57,6 +73,7 @@ const Home: React.FC = () => {
         value: number
     ) => {
         dispatch(updateCount(countId, key, value));
+        setUpdateCountData(undefined);
         onCloseModal();
     };
     const onCountDelete = (id: number) => {
@@ -137,28 +154,20 @@ const Home: React.FC = () => {
                     </tbody>
                 </table>
             </MainContainer>
-            <button
+
+            <FixedButton
                 onClick={() => setShowExercises(true)}
-                className="bg-primary-dark rounded-full fixed bottom-5 right-20 p-1 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
-                data-cy="add"
-            >
-                <Icon
-                    icon="plus"
-                    className="text-primary-highlight group-hover:text-primary-dark"
-                    size="lg"
-                />
-            </button>
-            <button
+                dataCy="add"
+                icon="plus"
+                className="right-20"
+            />
+            <FixedButton
                 onClick={() => setShowCalendar(true)}
-                className="bg-primary-dark rounded-full fixed bottom-5 right-5 p-2 transition-colors duration-200 cursor-pointer hover:bg-primary-lighter border-2 border-transparent hover:border-primary-dark group"
-                data-cy="calendar"
-            >
-                <Icon
-                    icon="calendarF"
-                    className="text-primary-highlight group-hover:text-primary-dark"
-                    size="md"
-                />
-            </button>
+                dataCy="calendar"
+                icon="calendarF"
+                size="md"
+                className="p-2"
+            />
 
             <CountExercisesModal
                 show={showExercises}
