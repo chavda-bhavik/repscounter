@@ -25,6 +25,9 @@
     .label-text {
         @apply tracking-wide font-semibold;
     }
+    .btn-primary {
+        @apply hover:text-primary-white;
+    }
     [contenteditable='true']:empty:before {
         content: attr(placeholder);
         pointer-events: none;

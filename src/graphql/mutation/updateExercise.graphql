@@ -5,10 +5,7 @@ mutation UpdateExercise($data: AddExerciseType!, $id: Int!) {
             message
         }
         entity {
-            id
-            name
-            calories
-            target
+            ...ExerciseFields
         }
     }
 }

@@ -1,72 +1,70 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CountState {
+interface ExercisesState {
     loading: boolean;
     errorMessage?: string;
-    counts: CountType[];
-    date?: Date;
+    exercises: ExerciseType[];
     fetched?: boolean;
 }
 
-const initialState: CountState = {
+const initialState: ExercisesState = {
     loading: false,
     errorMessage: undefined,
-    counts: [],
-    date: undefined,
+    exercises: [],
     fetched: false,
 };
 
-interface CountsSuccessType {
-    counts: CountType[];
+interface ExercisesSuccessType {
+    exercises: ExerciseType[];
     fetched?: boolean;
 }
-interface AddCountType {
-    count: CountType;
+interface AddExerciseType {
+    exercise: ExerciseType;
 }
-interface UpdateCountType {
-    count: CountType;
+interface UpdateExerciseType {
+    exercise: ExerciseType;
 }
-interface RemoveCountType {
-    countId: number;
+interface RemoveExerciseType {
+    exerciseId: number;
 }
 
-export const countSlice = createSlice({
-    name: 'count',
+export const exerciseSlice = createSlice({
+    name: 'exercises',
     initialState,
     reducers: {
         loading: (state) => {
             state.loading = true;
         },
-        counts: (state, action: PayloadAction<CountsSuccessType>) => {
+        exercises: (state, action: PayloadAction<ExercisesSuccessType>) => {
             state.loading = false;
-            state.counts = action.payload.counts;
+            state.exercises = action.payload.exercises;
             if (action.payload.fetched) state.fetched = action.payload.fetched;
         },
-        add: (state, action: PayloadAction<AddCountType>) => {
+        add: (state, action: PayloadAction<AddExerciseType>) => {
             state.loading = false;
-            state.counts.push({
-                ...action.payload.count,
+            state.exercises.push({
+                ...action.payload.exercise,
             });
         },
-        update: (state, action: PayloadAction<UpdateCountType>) => {
+        update: (state, action: PayloadAction<UpdateExerciseType>) => {
             state.loading = false;
-            state.counts = state.counts.map((count) => {
-                if (count.id === action.payload.count.id) {
+            state.exercises = state.exercises.map((exercise) => {
+                if (exercise.id === action.payload.exercise.id) {
                     return {
-                        ...action.payload.count,
+                        ...action.payload.exercise,
                     };
                 }
-                return count;
+                return exercise;
             });
         },
-        remove: (state, action: PayloadAction<RemoveCountType>) => {
+        remove: (state, action: PayloadAction<RemoveExerciseType>) => {
             state.loading = false;
-            state.counts = state.counts.filter((count) => {
-                return count.id !== action.payload.countId;
+            state.exercises = state.exercises.filter((exercise) => {
+                return exercise.id !== action.payload.exerciseId;
             });
         },
-        resetCounts: (state) => {
-            state.counts = [];
+        resetExercises: (state) => {
+            state.exercises = [];
         },
         error: (state, action) => {
             state.loading = false;
@@ -76,6 +74,7 @@ export const countSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { loading, error, resetCounts, counts, add, update, remove } = countSlice.actions;
+export const { loading, error, resetExercises, exercises, add, update, remove } =
+    exerciseSlice.actions;
 
-export default countSlice.reducer;
+export default exerciseSlice.reducer;

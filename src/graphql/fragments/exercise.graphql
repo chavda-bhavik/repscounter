@@ -1,0 +1,6 @@
+fragment ExerciseFields on Exercise {
+    id
+    name
+    target
+    calories
+}

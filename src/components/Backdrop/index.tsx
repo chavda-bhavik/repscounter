@@ -20,7 +20,7 @@ export const Backdrop: React.FC<BackdropProps> = ({ show, onClose, children }) =
     const AnimateBackdrop = (show: boolean) => {
         if (show) {
             gsap.to(nodeRef.current, {
-                duration: 0.2,
+                duration: 0.1,
                 opacity: 1,
                 // visibility: 'visible',
                 pointerEvents: 'auto',

@@ -1,10 +1,7 @@
 mutation AddExercise($data: AddExerciseType!) {
     addExercise(data: $data) {
         entity {
-            calories
-            id
-            name
-            target
+            ...ExerciseFields
         }
         errors {
             field

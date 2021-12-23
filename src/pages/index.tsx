@@ -11,6 +11,7 @@ import { Icon } from '@/components/Icon';
 import { Backdrop } from '@/components/Backdrop';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { fetchCounts, addCount, updateCount, removeCount } from '@/store/counts/Actions';
+import { fetchExercises } from '@/store/exercises/Actions';
 
 interface UpdateCountData {
     countId: number;
@@ -26,8 +27,12 @@ const Home: React.FC = () => {
     const [date, setDate] = useState(new Date());
 
     const { counts, loading, errorMessage } = useAppSelector((state) => state.count);
+    const { exercises } = useAppSelector((state) => state.exercise);
     const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        dispatch(fetchExercises());
+    }, []);
     useEffect(() => {
         dispatch(fetchCounts(date.toISOString()));
     }, [date]);
@@ -51,14 +56,7 @@ const Home: React.FC = () => {
         key: 'exerciseId' | 'reps' | 'sets' | 'kg',
         value: number
     ) => {
-        let data: CountInput = {
-            [key]: value,
-        };
         dispatch(updateCount(countId, key, value));
-        onCloseModal();
-    };
-    const onAddCount = (exerciseId: number) => {
-        addCount(exerciseId);
         onCloseModal();
     };
     const onCountDelete = (id: number) => {
@@ -79,15 +77,17 @@ const Home: React.FC = () => {
     };
     const onExerciseSelect = (exerciseId: number) => {
         if (selectedExerciseId && updateCountData) {
-            setUpdateCountData({
-                countId: updateCountData.countId,
-                key: 'exerciseId',
-                value: exerciseId,
-            });
+            onCountUpdate(updateCountData.countId, 'exerciseId', exerciseId);
             setSelectedExerciseId(undefined);
             setShowExercises(false);
         } else {
-            onAddCount(exerciseId);
+            dispatch(
+                addCount({
+                    date: date.toISOString(),
+                    exerciseId,
+                })
+            );
+            onCloseModal();
         }
     };
     const onCountDataChange = (countId: number, key: 'sets' | 'reps' | 'kg', value: string) => {
@@ -165,7 +165,7 @@ const Home: React.FC = () => {
                 onClose={onCloseModal}
                 onSelect={onExerciseSelect}
                 selectedExerciseId={selectedExerciseId}
-                exercises={[]}
+                exercises={exercises}
             />
 
             <Backdrop show={showCalendar} onClose={onCloseModal}>

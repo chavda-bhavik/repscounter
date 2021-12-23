@@ -21,13 +21,11 @@ export const fetchCounts =
         }
     };
 
-export const addCount = (exerciseId?: number) => async (dispatch: AppDispatch) => {
+export const addCount = (data: CountType) => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
         let result = await client.addCount({
-            data: {
-                exerciseId,
-            },
+            data,
         });
         if (result.addCount.entity) {
             dispatch(

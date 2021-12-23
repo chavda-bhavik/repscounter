@@ -1,8 +1,5 @@
-query Exercises {
+query exercises {
     exercises {
-        calories
-        name
-        id
-        target
+        ...ExerciseFields
     }
 }

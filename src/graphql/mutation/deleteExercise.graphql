@@ -1,8 +1,5 @@
 mutation DeleteExercise($id: Int!) {
     deleteExercise(id: $id) {
-        id
-        name
-        calories
-        target
+        ...ExerciseFields
     }
 }
