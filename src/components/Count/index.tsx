@@ -35,13 +35,22 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
         <tr
             className="hover:bg-primary-lighter cursor-pointer transition-colors delay-100 rounded-md opacity-0"
             ref={nodeRef}
+            data-cy="count"
         >
             <td className="p-2">
-                <button className="btn btn-error btn-sm" onClick={() => onRemoveClick(count.id!)}>
+                <button
+                    className="btn btn-error btn-sm"
+                    onClick={() => onRemoveClick(count.id!)}
+                    data-cy="delete-count"
+                >
                     X
                 </button>
             </td>
-            <td className="p-2" onClick={() => onCountClick(count.id!, count.exerciseId!)}>
+            <td
+                className="p-2"
+                onClick={() => onCountClick(count.id!, count.exerciseId!)}
+                data-cy="count-exercise"
+            >
                 {count.exercise?.name}
             </td>
             <td
@@ -52,6 +61,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 onInput={(e) =>
                     onChange(count.id!, 'sets', (e.target as HTMLTableCellElement).innerText)
                 }
+                data-cy="count-sets"
             >
                 {count.sets}
             </td>
@@ -63,6 +73,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 onInput={(e) =>
                     onChange(count.id!, 'reps', (e.target as HTMLTableCellElement).innerText)
                 }
+                data-cy="count-reps"
             >
                 {count.reps}
             </td>
@@ -74,6 +85,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 onInput={(e) =>
                     onChange(count.id!, 'kg', (e.target as HTMLTableCellElement).innerText)
                 }
+                data-cy="count-kg"
             >
                 {count.kg}
             </td>

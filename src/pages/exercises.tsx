@@ -61,17 +61,20 @@ const Exercices: React.FC = () => {
             <Header />
             <MainContainer loading={loading}>
                 <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
-                    {exercises.map((exercise) => (
-                        <Exercise
-                            onClick={() => onExerciseClick(exercise)}
-                            key={exercise.id}
-                            title={exercise.name}
-                            calories={exercise.calories}
-                        />
-                    ))}
+                    {exercises
+                        .slice()
+                        .sort((a, b) => a.id! - b.id!)
+                        .map((exercise) => (
+                            <Exercise
+                                onClick={() => onExerciseClick(exercise)}
+                                key={exercise.id}
+                                title={exercise.name}
+                                calories={exercise.calories}
+                            />
+                        ))}
                 </ul>
             </MainContainer>
-            <FixedButton onClick={() => setShowModal(true)} />
+            <FixedButton dataCy="add" onClick={() => setShowModal(true)} />
             <ExerciseModal
                 show={showModal}
                 onClose={onClose}
