@@ -58,7 +58,6 @@ const Exercices: React.FC = () => {
 
     return (
         <>
-            <Header />
             <MainContainer loading={loading}>
                 <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
                     {exercises

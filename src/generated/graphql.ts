@@ -23,6 +23,11 @@ export type AddExerciseType = {
   target?: InputMaybe<Scalars['String']>;
 };
 
+export type Calory = {
+  calories: Scalars['Float'];
+  date: Scalars['String'];
+};
+
 export type Count = {
   date: Scalars['String'];
   exercise: Exercise;
@@ -105,10 +110,17 @@ export type MutationUpdateExerciseArgs = {
 };
 
 export type Query = {
+  calories: Array<Calory>;
   count: Count;
   counts: Array<Count>;
   exercise: Exercise;
   exercises: Array<Exercise>;
+};
+
+
+export type QueryCaloriesArgs = {
+  dateEnd: Scalars['DateTime'];
+  dateStart: Scalars['DateTime'];
 };
 
 
@@ -174,6 +186,14 @@ export type UpdateExerciseMutationVariables = Exact<{
 
 
 export type UpdateExerciseMutation = { updateExercise: { errors?: Array<{ field: string, message: string }> | null | undefined, entity?: { id: number, name: string, target?: string | null | undefined, calories: number } | null | undefined } };
+
+export type CaloriesQueryVariables = Exact<{
+  dateEnd: Scalars['DateTime'];
+  dateStart: Scalars['DateTime'];
+}>;
+
+
+export type CaloriesQuery = { calories: Array<{ calories: number, date: string }> };
 
 export type CountsQueryVariables = Exact<{
   exerciseId?: InputMaybe<Scalars['Int']>;
@@ -276,6 +296,14 @@ export const UpdateExerciseDocument = gql`
   }
 }
     ${ExerciseFieldsFragmentDoc}`;
+export const CaloriesDocument = gql`
+    query calories($dateEnd: DateTime!, $dateStart: DateTime!) {
+  calories(dateEnd: $dateEnd, dateStart: $dateStart) {
+    calories
+    date
+  }
+}
+    `;
 export const CountsDocument = gql`
     query counts($exerciseId: Int, $date: DateTime) {
   counts(exerciseId: $exerciseId, date: $date) {
@@ -315,6 +343,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     UpdateExercise(variables: UpdateExerciseMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateExerciseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateExerciseMutation>(UpdateExerciseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateExercise');
+    },
+    calories(variables: CaloriesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CaloriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CaloriesQuery>(CaloriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'calories');
     },
     counts(variables?: CountsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CountsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CountsQuery>(CountsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'counts');
