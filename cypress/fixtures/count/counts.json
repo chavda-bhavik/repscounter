@@ -1,0 +1,58 @@
+{
+    "data": {
+        "counts": [
+            {
+                "id": 1,
+                "date": "2021-10-11",
+                "sets": 5,
+                "reps": 15,
+                "kg": "",
+                "exerciseId": 1,
+                "exercise": {
+                    "name": "Barbell Pull Up",
+                    "__typename": "Exercise"
+                },
+                "__typename": "Count"
+            },
+            {
+                "id": 2,
+                "date": "2021-10-12",
+                "sets": 5,
+                "reps": 10,
+                "kg": "5",
+                "exerciseId": 2,
+                "exercise": {
+                    "name": "Bench Press",
+                    "__typename": "Exercise"
+                },
+                "__typename": "Count"
+            },
+            {
+                "id": 3,
+                "date": "2021-10-12",
+                "sets": 5,
+                "reps": 10,
+                "kg": "10",
+                "exerciseId": 3,
+                "exercise": {
+                    "name": "Sholder Press",
+                    "__typename": "Exercise"
+                },
+                "__typename": "Count"
+            },
+            {
+                "id": 4,
+                "date": "2021-10-13",
+                "sets": 5,
+                "reps": 10,
+                "kg": "12.5",
+                "exerciseId": 4,
+                "exercise": {
+                    "name": "Dumbell Curls",
+                    "__typename": "Exercise"
+                },
+                "__typename": "Count"
+            }
+        ]
+    }
+}

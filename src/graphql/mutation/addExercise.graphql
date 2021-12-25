@@ -1,0 +1,11 @@
+mutation AddExercise($data: AddExerciseType!) {
+    addExercise(data: $data) {
+        entity {
+            ...ExerciseFields
+        }
+        errors {
+            field
+            message
+        }
+    }
+}

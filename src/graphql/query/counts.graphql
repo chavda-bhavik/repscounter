@@ -1,0 +1,5 @@
+query counts($exerciseId: Int, $date: DateTime) {
+    counts(exerciseId: $exerciseId, date: $date) {
+        ...CountFields
+    }
+}

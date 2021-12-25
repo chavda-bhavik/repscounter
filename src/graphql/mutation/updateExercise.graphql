@@ -1,0 +1,11 @@
+mutation UpdateExercise($data: AddExerciseType!, $id: Int!) {
+    updateExercise(data: $data, id: $id) {
+        errors {
+            field
+            message
+        }
+        entity {
+            ...ExerciseFields
+        }
+    }
+}

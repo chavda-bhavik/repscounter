@@ -1,0 +1,12 @@
+fragment CountFields on Count {
+    id
+    date
+    sets
+    reps
+    kg
+    exerciseId
+    exercise {
+        id
+        name
+    }
+}

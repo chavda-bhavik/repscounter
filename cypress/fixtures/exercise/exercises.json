@@ -1,0 +1,41 @@
+{
+    "data": {
+        "exercises": [
+            {
+                "id": 1,
+                "name": "Barbell Pull Up",
+                "calories": 120,
+                "target": "Chest",
+                "__typename": "Exercise"
+            },
+            {
+                "id": 2,
+                "calories": 100,
+                "name": "Bench Press",
+                "target": "Chest",
+                "__typename": "Exercise"
+            },
+            {
+                "id": 3,
+                "calories": 140,
+                "name": "Sholder Press",
+                "target": "Sholder",
+                "__typename": "Exercise"
+            },
+            {
+                "id": 4,
+                "calories": 150,
+                "name": "Dumbell Curls",
+                "target": "Bieceps",
+                "__typename": "Exercise"
+            },
+            {
+                "id": 5,
+                "calories": 160,
+                "name": "Weight Lifting",
+                "target": "Leg",
+                "__typename": "Exercise"
+            }
+        ]
+    }
+}

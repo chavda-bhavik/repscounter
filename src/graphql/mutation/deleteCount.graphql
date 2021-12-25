@@ -1,0 +1,5 @@
+mutation DeleteCount($id: Int!) {
+    deleteCount(id: $id) {
+        ...CountFields
+    }
+}
