@@ -115,6 +115,7 @@ export type Query = {
   counts: Array<Count>;
   exercise: Exercise;
   exercises: Array<Exercise>;
+  targets: Array<Target>;
 };
 
 
@@ -137,6 +138,17 @@ export type QueryCountsArgs = {
 
 export type QueryExerciseArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryTargetsArgs = {
+  dateEnd: Scalars['DateTime'];
+  dateStart: Scalars['DateTime'];
+};
+
+export type Target = {
+  calories: Scalars['Float'];
+  target: Scalars['String'];
 };
 
 export type CountFieldsFragment = { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } };
@@ -207,6 +219,14 @@ export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ExercisesQuery = { exercises: Array<{ id: number, name: string, target?: string | null | undefined, calories: number }> };
+
+export type TargetsQueryVariables = Exact<{
+  dateEnd: Scalars['DateTime'];
+  dateStart: Scalars['DateTime'];
+}>;
+
+
+export type TargetsQuery = { targets: Array<{ target: string, calories: number }> };
 
 export const CountFieldsFragmentDoc = gql`
     fragment CountFields on Count {
@@ -318,6 +338,14 @@ export const ExercisesDocument = gql`
   }
 }
     ${ExerciseFieldsFragmentDoc}`;
+export const TargetsDocument = gql`
+    query targets($dateEnd: DateTime!, $dateStart: DateTime!) {
+  targets(dateEnd: $dateEnd, dateStart: $dateStart) {
+    target
+    calories
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
@@ -352,6 +380,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     exercises(variables?: ExercisesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ExercisesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ExercisesQuery>(ExercisesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'exercises');
+    },
+    targets(variables: TargetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<TargetsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<TargetsQuery>(TargetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'targets');
     }
   };
 }
