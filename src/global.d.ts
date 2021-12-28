@@ -1,4 +1,5 @@
 declare module 'chartist-plugin-tooltips-updated';
+declare module '*.svg?component';
 
 type IconsType = 'anchor' | 'dashboard' | 'taskList' | 'trophy' | 'plus' | 'close' | 'calendarF';
 

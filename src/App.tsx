@@ -7,6 +7,7 @@ import { Layout } from '@/components/Layout';
 import Exercises from './pages/exercises';
 import Counts from './pages/index';
 import Dashboard from './pages/dashboard';
+import Loader from './pages/loader';
 import { Header } from './components/Header';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/" component={Counts} />
                 <Route path="/exercises" component={Exercises} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/loader" component={Loader} />
             </Switch>
         </Layout>
     );

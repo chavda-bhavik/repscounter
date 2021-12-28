@@ -31,6 +31,7 @@
         "@graphql-codegen/typescript": "2.4.1",
         "@graphql-codegen/typescript-graphql-request": "^4.3.2",
         "@graphql-codegen/typescript-operations": "^2.2.1",
+        "@honkhonk/vite-plugin-svgr": "^1.1.0",
         "@types/node": "16.11.7",
         "@types/react": "^17.0.37",
         "@types/react-calendar": "^3.4.3",
