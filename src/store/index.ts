@@ -4,10 +4,12 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 // slices
 import countSlice from './counts';
 import exerciseSlice from './exercises';
+import DashboardSlice from './dashboard';
 
 const rootReducer = combineReducers({
     count: countSlice,
     exercise: exerciseSlice,
+    dashboard: DashboardSlice,
 });
 
 const store = configureStore({

@@ -1,3 +1,5 @@
+declare module 'chartist-plugin-tooltips-updated';
+
 type IconsType = 'anchor' | 'dashboard' | 'taskList' | 'trophy' | 'plus' | 'close' | 'calendarF';
 
 type IconsSizesType = 'sm' | 'md' | 'lg';

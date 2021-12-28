@@ -15,7 +15,11 @@ export const Header: React.FC<HeaderProps> = ({}) => {
                 </Link>
             </div>
             <div className="flex-none space-x-5">
-                <Icon icon="dashboard" className="text-primary-lighter" />
+                <Link href="/dashboard">
+                    <a>
+                        <Icon icon="dashboard" className="text-primary-lighter" />
+                    </a>
+                </Link>
                 <Link href="/exercises">
                     <a>
                         <Icon icon="taskList" className="text-primary-lighter" />

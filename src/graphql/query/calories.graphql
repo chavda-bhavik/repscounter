@@ -1,0 +1,6 @@
+query calories($dateEnd: DateTime!, $dateStart: DateTime!) {
+    calories(dateEnd: $dateEnd, dateStart: $dateStart) {
+        calories
+        date
+    }
+}

@@ -12,6 +12,7 @@ interface InputProps {
     error?: string;
     register?: any;
     dataCy?: string;
+    note?: string;
     defaultValue?: string;
 }
 
@@ -28,6 +29,7 @@ export const Input: React.FC<InputProps> = ({
     dataCy,
     defaultValue,
     register,
+    note,
 }) => {
     const inputContent = () => {
         switch (type) {
@@ -81,6 +83,11 @@ export const Input: React.FC<InputProps> = ({
                 </label>
             )}
             {inputContent()}
+            {note && (
+                <label className="label">
+                    <p className="label-text-alt" dangerouslySetInnerHTML={{ __html: note }} />
+                </label>
+            )}
             {error && <p className="label-text text-error m-1 font-medium">{error}</p>}
         </div>
     );

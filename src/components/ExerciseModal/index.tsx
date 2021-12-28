@@ -94,7 +94,7 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                     type="number"
                     label="Calories Burn"
                     required
-                    placeholder="120"
+                    placeholder="4"
                     register={register('calories', {
                         required: 'Calories is required',
                         min: 1,
@@ -105,6 +105,7 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
                             : undefined
                     }
                     dataCy="calories"
+                    note="Calories burned <b>per One Set of 5 KG Weight</b>"
                 />
                 <div className="modal-action">
                     <Button dataCy="submit" type="submit" variant="primary" loading={submitLoading}>

@@ -6,13 +6,13 @@ import { Header } from '@/components/Header';
 import { Count } from '@/components/Count';
 import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
-import { Icon } from '@/components/Icon';
 import { Backdrop } from '@/components/Backdrop';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { fetchCounts, addCount, updateCount, removeCount } from '@/store/counts/Actions';
 import { fetchExercises } from '@/store/exercises/Actions';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { FixedButton } from '@/components/FixedButton';
+import { formatDateToString } from '@/utils/helper';
 
 interface UpdateCountData {
     countId: number;
@@ -100,7 +100,7 @@ const Home: React.FC = () => {
         } else {
             dispatch(
                 addCount({
-                    date: date.toISOString(),
+                    date: formatDateToString(date),
                     exerciseId,
                 })
             );
@@ -121,7 +121,6 @@ const Home: React.FC = () => {
     };
     return (
         <>
-            <Header />
             <MainContainer loading={false}>
                 <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>

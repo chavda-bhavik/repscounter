@@ -8,4 +8,7 @@ export default defineConfig({
         brotliSize: false,
     },
     plugins: [tsconfigPaths(), reactRefresh()],
+    optimizeDeps: {
+        exclude: ['@tailwindcss'],
+    },
 });

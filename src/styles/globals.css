@@ -45,25 +45,12 @@
         @apply rounded-md;
     }
     /* End of Calendar Style */
-    /* Count Animations */
-    .count-enter {
-        opacity: 0;
-        transform: translateY(-101%);
+    /* Dashboard Styles */
+    .dashboard-container {
+        @apply p-2 flex flex-col md:flex-row justify-center align-middle items-center space-y-2 md:space-x-2 md:space-y-0;
     }
-    .count-enter-active {
-        opacity: 1;
-        transform: translateY(0%);
+    .chart-card {
+        @apply bg-gray-50 p-2 w-full rounded-md border-2 border-primary-darker flex-1;
     }
-    .count-exit {
-        opacity: 1;
-        transform: translateY(0%);
-    }
-    .count-exit-active {
-        opacity: 0;
-        transform: translateY(-101%);
-    }
-    .count-exit-done,
-    .count-enter-done {
-        transition: opacity 500ms, transform 500ms;
-    }
+    /* End of Dashboard Styles */
 }
