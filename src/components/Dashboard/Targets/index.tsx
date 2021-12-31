@@ -27,9 +27,7 @@ export const Targets: React.FC<TargetsProps> = ({}) => {
         labels: [],
         datasets: [],
     });
-    const { targetCalories, targets, loading, errorMessage } = useAppSelector(
-        (state) => state.dashboard
-    );
+    const { targetCalories, targets, targetsLoading } = useAppSelector((state) => state.dashboard);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -39,7 +37,7 @@ export const Targets: React.FC<TargetsProps> = ({}) => {
     }, [week]);
 
     useEffect(() => {
-        if (targetCalories && !loading) {
+        if (!targetsLoading) {
             setChartData({
                 labels: targets,
                 datasets: [
@@ -68,7 +66,7 @@ export const Targets: React.FC<TargetsProps> = ({}) => {
                 ],
             });
         }
-    }, [targetCalories, loading]);
+    }, [targetCalories, targetsLoading]);
 
     const options: ChartOptions<'pie'> = {
         responsive: true,

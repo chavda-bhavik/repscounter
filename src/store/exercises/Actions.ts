@@ -19,7 +19,7 @@ export const fetchExercises = () => async (dispatch: AppDispatch) => {
 
 export const addExercise = (data: ExerciseType) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.AddExercise({
             data,
         });
@@ -38,7 +38,7 @@ export const addExercise = (data: ExerciseType) => async (dispatch: AppDispatch)
 export const updateExercise =
     (exerciseId: number, data: ExerciseType) => async (dispatch: AppDispatch) => {
         try {
-            dispatch(loading());
+            // dispatch(loading());
             let result = await client.UpdateExercise({
                 data,
                 id: exerciseId,
@@ -57,7 +57,7 @@ export const updateExercise =
 
 export const removeExercise = (exerciseId: number) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.DeleteExercise({
             id: exerciseId,
         });

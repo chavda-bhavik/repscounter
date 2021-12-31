@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { Exercise } from '@/components/Exercise';
 import { FixedButton } from '@/components/FixedButton';
-import { Header } from '@/components/Header';
 import { ExerciseModal } from '@/components/ExerciseModal';
 import { MainContainer } from '@/components/MainContainer';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -13,6 +12,7 @@ import {
     removeExercise,
 } from '@/store/exercises/Actions';
 import { useKeyPress } from '@/hooks/useKeyPress';
+import { Alert } from '@/components/Alert';
 
 const Exercices: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
@@ -59,6 +59,7 @@ const Exercices: React.FC = () => {
     return (
         <>
             <MainContainer loading={loading}>
+                {errorMessage ? <Alert text={errorMessage} /> : null}
                 <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
                     {exercises
                         .slice()

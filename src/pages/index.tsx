@@ -13,6 +13,7 @@ import { fetchExercises } from '@/store/exercises/Actions';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { FixedButton } from '@/components/FixedButton';
 import { formatDateToString } from '@/utils/helper';
+import { Alert } from '@/components/Alert';
 
 interface UpdateCountData {
     countId: number;
@@ -121,7 +122,8 @@ const Home: React.FC = () => {
     };
     return (
         <>
-            <MainContainer loading={false}>
+            <MainContainer loading={loading}>
+                {errorMessage ? <Alert text={errorMessage} /> : null}
                 <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>
                         <tr className="bg-primary-dark text-white">
@@ -153,12 +155,12 @@ const Home: React.FC = () => {
                     </tbody>
                 </table>
             </MainContainer>
-
             <FixedButton
                 onClick={() => setShowExercises(true)}
                 dataCy="add"
                 icon="plus"
                 className="right-20"
+                disabled={loading}
             />
             <FixedButton
                 onClick={() => setShowCalendar(true)}
@@ -166,8 +168,8 @@ const Home: React.FC = () => {
                 icon="calendarF"
                 size="md"
                 className="p-2"
+                disabled={loading}
             />
-
             <CountExercisesModal
                 show={showExercises}
                 onClose={onCloseModal}
@@ -175,7 +177,6 @@ const Home: React.FC = () => {
                 selectedExerciseId={selectedExerciseId}
                 exercises={exercises}
             />
-
             <Backdrop show={showCalendar} onClose={onCloseModal}>
                 <Calendar maxDate={new Date()} value={date} onChange={onDateChange} />
             </Backdrop>

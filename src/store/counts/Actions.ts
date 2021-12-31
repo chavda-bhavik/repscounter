@@ -23,7 +23,7 @@ export const fetchCounts =
 
 export const addCount = (data: CountType) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.addCount({
             data,
         });
@@ -43,7 +43,7 @@ export const updateCount =
     (countId: number, key: 'exerciseId' | 'reps' | 'sets' | 'kg', value: number) =>
     async (dispatch: AppDispatch) => {
         try {
-            dispatch(loading());
+            // dispatch(loading());
             let result = await client.updateCount({
                 data: {
                     [key]: value,
@@ -64,7 +64,7 @@ export const updateCount =
 
 export const removeCount = (countId: number) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.DeleteCount({
             id: countId,
         });

@@ -5,7 +5,8 @@ export type IconsType =
     | 'trophy'
     | 'plus'
     | 'close'
-    | 'calendarF';
+    | 'calendarF'
+    | 'alert';
 
 export type IconsSizesType = 'sm' | 'md' | 'lg';
 
