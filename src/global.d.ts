@@ -32,3 +32,8 @@ type CountType = {
     exerciseId?: string;
     exercise?: Partial<ExerciseType>;
 };
+
+interface UpdateExerciseData {
+    countId: string;
+    exerciseId: string;
+}

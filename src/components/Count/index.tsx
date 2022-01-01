@@ -6,9 +6,16 @@ interface CountProps {
     onChange: (countId: string, key: 'sets' | 'reps' | 'kg', value: string) => void;
     onDeleteClick: (id: string) => void;
     onCountClick: (countId: string, exerciseId: string) => void;
+    exerciseName?: string;
 }
 
-export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick, onChange }) => {
+export const Count: React.FC<CountProps> = ({
+    count,
+    onDeleteClick,
+    onCountClick,
+    onChange,
+    exerciseName,
+}) => {
     const nodeRef = useRef(null);
     useEffect(() => {
         gsap.to(nodeRef.current, {
@@ -49,7 +56,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 onClick={() => onCountClick(count.id!, count.exerciseId!)}
                 data-cy="count-exercise"
             >
-                {count.exercise?.name}
+                {exerciseName}
             </td>
             <td
                 className="p-2"

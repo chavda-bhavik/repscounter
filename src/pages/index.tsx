@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import 'react-calendar/dist/Calendar.css';
 
 import { Count } from '@/components/Count';
-import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
 import { Backdrop } from '@/components/Backdrop';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -12,26 +10,24 @@ import { fetchExercises } from '@/store/exercises/Actions';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { FixedButton } from '@/components/FixedButton';
 import { formatDateToString } from '@/utils/helper';
-import { Alert } from '@/components/Alert';
 
-interface UpdateCountData {
-    countId: string;
-    key: 'sets' | 'reps' | 'kg' | 'exerciseId';
-    value?: number | string;
-}
+const LazyCountExerciseModal = lazy(() => import('@/components/CountExercisesModal'));
+const LazyCalendar = lazy(() => import('react-calendar'));
 
 const Home: React.FC = () => {
     const [showExercises, setShowExercises] = useState(false);
-    const [selectedExerciseId, setSelectedExerciseId] = useState<string>();
-    const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
+    const [exerciseUpdateData, setExerciseUpdateData] = useState<UpdateExerciseData>();
+    const [formattedExercises, setFormattedExercises] = useState<{ [key: string]: string }>({});
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
+
     // keyPress hooks
     const addClicked = useKeyPress({ userKeys: ['+'] });
     const escapClicked = useKeyPress({ userKeys: ['Escape'] });
     const slashClicked = useKeyPress({ userKeys: ['/'] });
+
     // store hooks
-    const { counts, loading, errorMessage } = useAppSelector((state) => state.count);
+    const { counts, loading } = useAppSelector((state) => state.count);
     const { exercises } = useAppSelector((state) => state.exercise);
     const dispatch = useAppDispatch();
 
@@ -45,57 +41,47 @@ const Home: React.FC = () => {
     }, [date]);
     // effect to run on key press
     useEffect(() => {
-        if (addClicked && !showExercises && !showCalendar && !updateCountData)
-            setShowExercises(true);
+        if (addClicked && !showExercises && !showCalendar) setShowExercises(true);
         if (escapClicked && showExercises) setShowExercises(false);
         if (escapClicked && showCalendar) setShowCalendar(false);
-        if (slashClicked && !showExercises && !showCalendar && !updateCountData)
-            setShowCalendar(true);
+        if (slashClicked && !showExercises && !showCalendar) setShowCalendar(true);
     }, [addClicked, escapClicked, slashClicked]);
-
+    // setting formatted exercises
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (
-                updateCountData &&
-                updateCountData.countId &&
-                updateCountData.key &&
-                updateCountData.value
-            ) {
-                onCountUpdate(updateCountData.countId, updateCountData.key, updateCountData.value);
-            }
-        }, 500);
-        return () => clearTimeout(timer);
-    }, [updateCountData]);
-
+        if (Array.isArray(exercises) && exercises.length > 0) {
+            let data: { [key: string]: string } = {};
+            data = exercises.reduce((acc, curr) => {
+                acc[curr.id!] = curr.name;
+                return acc;
+            }, data);
+            setFormattedExercises(data);
+        }
+    }, [exercises]);
+    console.log(formattedExercises, exercises, counts);
     const onCountUpdate = (
         countId: string,
         key: 'exerciseId' | 'reps' | 'sets' | 'kg',
         value: number | string
     ) => {
-        dispatch(updateCount(countId, key, value));
-        setUpdateCountData(undefined);
+        dispatch(updateCount(countId, key, Number(value)));
         onCloseModal();
     };
     const onCountDelete = (id: string) => {
         dispatch(removeCount(id));
     };
     const onCountClick = (countId: string, exerciseId: string) => {
-        setUpdateCountData({
-            countId,
-            key: 'exerciseId',
-        });
-        setSelectedExerciseId(exerciseId);
+        setExerciseUpdateData({ countId, exerciseId });
         setShowExercises(true);
     };
     const onCloseModal = () => {
-        setSelectedExerciseId(undefined);
+        setExerciseUpdateData(undefined);
         setShowCalendar(false);
         setShowExercises(false);
     };
     const onExerciseSelect = (exerciseId: string) => {
-        if (selectedExerciseId && updateCountData) {
-            onCountUpdate(updateCountData.countId, 'exerciseId', exerciseId);
-            setSelectedExerciseId(undefined);
+        if (exerciseUpdateData) {
+            onCountUpdate(exerciseUpdateData.countId, 'exerciseId', exerciseId);
+            setExerciseUpdateData(undefined);
             setShowExercises(false);
         } else {
             dispatch(
@@ -109,11 +95,7 @@ const Home: React.FC = () => {
     };
     const onCountDataChange = (countId: string, key: 'sets' | 'reps' | 'kg', value: string) => {
         if (isNaN(Number(value)) || Number(value) < 0) return;
-        setUpdateCountData({
-            countId,
-            key,
-            value: Number(value),
-        });
+        onCountUpdate(countId, key, value);
     };
     const onDateChange = (date: Date) => {
         setDate(date);
@@ -122,7 +104,6 @@ const Home: React.FC = () => {
     return (
         <>
             <MainContainer loading={loading}>
-                {errorMessage ? <Alert text={errorMessage} className="mb-2" /> : null}
                 <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>
                         <tr className="bg-primary-dark text-white">
@@ -149,6 +130,7 @@ const Home: React.FC = () => {
                                 onChange={onCountDataChange}
                                 onDeleteClick={onCountDelete}
                                 onCountClick={onCountClick}
+                                exerciseName={formattedExercises[countItem.exerciseId!]}
                             />
                         ))}
                     </tbody>
@@ -169,16 +151,20 @@ const Home: React.FC = () => {
                 className="p-2"
                 disabled={loading}
             />
-            <CountExercisesModal
-                show={showExercises}
-                onClose={onCloseModal}
-                onSelect={onExerciseSelect}
-                selectedExerciseId={selectedExerciseId}
-                exercises={exercises}
-            />
-            <Backdrop show={showCalendar} onClose={onCloseModal}>
-                <Calendar maxDate={new Date()} value={date} onChange={onDateChange} />
-            </Backdrop>
+            <Suspense fallback={null}>
+                <LazyCountExerciseModal
+                    show={showExercises}
+                    onClose={onCloseModal}
+                    onSelect={onExerciseSelect}
+                    selectedExerciseId={exerciseUpdateData?.exerciseId}
+                    exercises={exercises}
+                />
+            </Suspense>
+            <Suspense fallback={null}>
+                <Backdrop show={showCalendar} onClose={onCloseModal}>
+                    <LazyCalendar maxDate={new Date()} value={date} onChange={onDateChange} />
+                </Backdrop>
+            </Suspense>
         </>
     );
 };

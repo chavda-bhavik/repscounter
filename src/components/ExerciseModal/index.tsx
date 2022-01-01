@@ -15,7 +15,7 @@ interface ExerciseModalProps {
     deleteLoading?: boolean;
 }
 
-export const ExerciseModal: React.FC<ExerciseModalProps> = ({
+const ExerciseModal: React.FC<ExerciseModalProps> = ({
     show,
     onClose,
     onSubmit,
@@ -128,3 +128,5 @@ export const ExerciseModal: React.FC<ExerciseModalProps> = ({
         </Backdrop>
     );
 };
+
+export default ExerciseModal;

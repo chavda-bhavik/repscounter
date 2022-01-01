@@ -24,7 +24,7 @@ interface AddCountType {
     count: CountType;
 }
 interface UpdateCountType {
-    count: CountType;
+    count: Partial<CountType>;
 }
 interface RemoveCountType {
     countId: string;
@@ -53,6 +53,7 @@ export const countSlice = createSlice({
             state.counts = state.counts.map((count) => {
                 if (count.id === action.payload.count.id) {
                     return {
+                        ...count,
                         ...action.payload.count,
                     };
                 }

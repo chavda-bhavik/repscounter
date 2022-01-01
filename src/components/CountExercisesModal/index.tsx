@@ -11,7 +11,7 @@ interface CountExercisesModalProps {
     exercises?: ExerciseType[];
 }
 
-export const CountExercisesModal: React.FC<CountExercisesModalProps> = ({
+const CountExercisesModal: React.FC<CountExercisesModalProps> = ({
     show,
     onClose,
     onSelect,
@@ -51,3 +51,5 @@ export const CountExercisesModal: React.FC<CountExercisesModalProps> = ({
         </Backdrop>
     );
 };
+
+export default CountExercisesModal;

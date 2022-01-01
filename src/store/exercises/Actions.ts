@@ -19,28 +19,38 @@ export const fetchExercises = () => async (dispatch: AppDispatch) => {
 };
 
 export const addExercise = (data: ExerciseType) => async (dispatch: AppDispatch) => {
+    let exerciseToAdd = {
+        ...data,
+        id: uuid()
+    }
     try {
         // dispatch(loading());
         let result = await client.AddExercise({
             data: {
-                ...data,
-                id: uuid()
+                ...exerciseToAdd
             },
         });
         if (result.addExercise.entity) {
-            dispatch(
-                add({
-                    exercise: result.addExercise.entity,
-                })
-            );
+            exerciseToAdd = { ...result.addExercise.entity };
         }
     } catch (err) {
         dispatch(error((err as Error).message));
     }
+    dispatch(
+        add({
+            exercise: {
+                ...exerciseToAdd
+            }
+        })
+    );
 };
 
 export const updateExercise =
     (exerciseId: string, data: ExerciseType) => async (dispatch: AppDispatch) => {
+        let updateData = {
+            ...data,
+            id: exerciseId
+        }
         try {
             // dispatch(loading());
             let result = await client.UpdateExercise({
@@ -48,27 +58,26 @@ export const updateExercise =
                 id: exerciseId,
             });
             if (result.updateExercise.entity) {
-                dispatch(
-                    update({
-                        exercise: result.updateExercise.entity,
-                    })
-                );
+                updateData = { ...result.updateExercise.entity };
             }
         } catch (err) {
             dispatch(error((err as Error).message));
         }
+        dispatch(
+            update({
+                exercise: { ...updateData }
+            })
+        );
     };
 
 export const removeExercise = (exerciseId: string) => async (dispatch: AppDispatch) => {
     try {
         // dispatch(loading());
-        let result = await client.DeleteExercise({
+        await client.DeleteExercise({
             id: exerciseId,
         });
-        if (result.deleteExercise) {
-            dispatch(remove({ exerciseId }));
-        }
     } catch (err) {
         dispatch(error((err as Error).message));
     }
+    dispatch(remove({ exerciseId }));
 };

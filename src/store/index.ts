@@ -1,10 +1,23 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist';
+import localfroage from 'localforage';
 
 // slices
 import countSlice from './counts';
 import exerciseSlice from './exercises';
 import DashboardSlice from './dashboard';
+
+const persistConfig = { key: 'root', version: 1, storage: localfroage, whitelist: ['count', 'exercise'] };
 
 const rootReducer = combineReducers({
     count: countSlice,
@@ -12,9 +25,16 @@ const rootReducer = combineReducers({
     dashboard: DashboardSlice,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
+    }),
 });
+
+export const persistor = persistStore(store);
 
 export default store;
 

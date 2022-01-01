@@ -15,10 +15,6 @@ let addCountResponseData = {
                 reps: '',
                 kg: '',
                 exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                exercise: {
-                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                    name: newCountData.exercise,
-                },
             },
             errors: null,
         },
@@ -42,10 +38,6 @@ let updateCountResponse1 = {
                 reps: '',
                 kg: '',
                 exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                exercise: {
-                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                    name: 'Barbell Pull Up',
-                },
             },
             errors: null,
         },
@@ -61,10 +53,6 @@ let updateCountResponse2 = {
                 reps: updateCountData.reps,
                 kg: '',
                 exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                exercise: {
-                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                    name: 'Barbell Pull Up',
-                },
             },
             errors: null,
         },
@@ -80,10 +68,6 @@ let updateCountResponse3 = {
                 reps: updateCountData.reps,
                 kg: updateCountData.kg,
                 exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                exercise: {
-                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
-                    name: 'Barbell Pull Up',
-                },
             },
             errors: null,
         },
@@ -99,10 +83,6 @@ let updateCountResponse4 = {
                 reps: updateCountData.reps,
                 kg: updateCountData.kg,
                 exerciseId: updateCountData.exerciseId,
-                exercise: {
-                    id: updateCountData.exerciseId,
-                    name: updateCountData.exercise,
-                },
             },
             errors: null,
         },
@@ -118,10 +98,6 @@ let deleteCountResponse = {
                 reps: 15,
                 kg: 7.5,
                 exerciseId: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
-                exercise: {
-                    id: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
-                    name: 'Bench Press',
-                },
             },
             errors: null,
         },
@@ -131,7 +107,7 @@ let deleteCountResponse = {
 describe('Counts', () => {
     it('Should load counts', () => {
         cy.intercept(SERVER_URL, (req) => {
-            if (req.body.operationName === 'Exercises') {
+            if (req.body.operationName === 'exercises') {
                 req.reply({ fixture: 'exercise/exercises.json' });
             }
         }).as('exercises');

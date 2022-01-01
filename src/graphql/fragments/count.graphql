@@ -5,8 +5,4 @@ fragment CountFields on Count {
     reps
     kg
     exerciseId
-    exercise {
-        id
-        name
-    }
 }
