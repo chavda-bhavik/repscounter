@@ -1,4 +1,4 @@
-mutation DeleteExercise($id: Int!) {
+mutation DeleteExercise($id: String!) {
     deleteExercise(id: $id) {
         ...ExerciseFields
     }

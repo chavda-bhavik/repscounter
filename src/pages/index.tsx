@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-import { Header } from '@/components/Header';
 import { Count } from '@/components/Count';
 import { CountExercisesModal } from '@/components/CountExercisesModal';
 import { MainContainer } from '@/components/MainContainer';
@@ -16,14 +15,14 @@ import { formatDateToString } from '@/utils/helper';
 import { Alert } from '@/components/Alert';
 
 interface UpdateCountData {
-    countId: number;
+    countId: string;
     key: 'sets' | 'reps' | 'kg' | 'exerciseId';
-    value?: number;
+    value?: number | string;
 }
 
 const Home: React.FC = () => {
     const [showExercises, setShowExercises] = useState(false);
-    const [selectedExerciseId, setSelectedExerciseId] = useState<number>();
+    const [selectedExerciseId, setSelectedExerciseId] = useState<string>();
     const [updateCountData, setUpdateCountData] = useState<UpdateCountData>();
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
@@ -69,18 +68,18 @@ const Home: React.FC = () => {
     }, [updateCountData]);
 
     const onCountUpdate = (
-        countId: number,
+        countId: string,
         key: 'exerciseId' | 'reps' | 'sets' | 'kg',
-        value: number
+        value: number | string
     ) => {
         dispatch(updateCount(countId, key, value));
         setUpdateCountData(undefined);
         onCloseModal();
     };
-    const onCountDelete = (id: number) => {
+    const onCountDelete = (id: string) => {
         dispatch(removeCount(id));
     };
-    const onCountClick = (countId: number, exerciseId: number) => {
+    const onCountClick = (countId: string, exerciseId: string) => {
         setUpdateCountData({
             countId,
             key: 'exerciseId',
@@ -93,7 +92,7 @@ const Home: React.FC = () => {
         setShowCalendar(false);
         setShowExercises(false);
     };
-    const onExerciseSelect = (exerciseId: number) => {
+    const onExerciseSelect = (exerciseId: string) => {
         if (selectedExerciseId && updateCountData) {
             onCountUpdate(updateCountData.countId, 'exerciseId', exerciseId);
             setSelectedExerciseId(undefined);
@@ -108,7 +107,7 @@ const Home: React.FC = () => {
             onCloseModal();
         }
     };
-    const onCountDataChange = (countId: number, key: 'sets' | 'reps' | 'kg', value: string) => {
+    const onCountDataChange = (countId: string, key: 'sets' | 'reps' | 'kg', value: string) => {
         if (isNaN(Number(value)) || Number(value) < 0) return;
         setUpdateCountData({
             countId,
@@ -123,7 +122,7 @@ const Home: React.FC = () => {
     return (
         <>
             <MainContainer loading={loading}>
-                {errorMessage ? <Alert text={errorMessage} /> : null}
+                {errorMessage ? <Alert text={errorMessage} className="mb-2" /> : null}
                 <table className="w-full bg-primary-white py-3 shadow-lg rounded-box text-center text-lg font-medium">
                     <thead>
                         <tr className="bg-primary-dark text-white">

@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-import { CountType } from '@/interfaces';
-
 interface CountProps {
     count: CountType;
-    onChange: (countId: number, key: 'sets' | 'reps' | 'kg', value: string) => void;
-    onDeleteClick: (id: number) => void;
-    onCountClick: (countId: number, exerciseId: number) => void;
+    onChange: (countId: string, key: 'sets' | 'reps' | 'kg', value: string) => void;
+    onDeleteClick: (id: string) => void;
+    onCountClick: (countId: string, exerciseId: string) => void;
 }
 
 export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick, onChange }) => {
@@ -20,7 +18,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
             // height: 'auto',
         });
     }, []);
-    const onRemoveClick = (id: number) => {
+    const onRemoveClick = (id: string) => {
         gsap.to(nodeRef.current, {
             opacity: 0,
             duration: 0.1,
@@ -58,7 +56,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 contentEditable
                 suppressContentEditableWarning
                 placeholder="-"
-                onInput={(e) =>
+                onBlur={(e) =>
                     onChange(count.id!, 'sets', (e.target as HTMLTableCellElement).innerText)
                 }
                 data-cy="count-sets"
@@ -70,7 +68,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 contentEditable
                 suppressContentEditableWarning
                 placeholder="-"
-                onInput={(e) =>
+                onBlur={(e) =>
                     onChange(count.id!, 'reps', (e.target as HTMLTableCellElement).innerText)
                 }
                 data-cy="count-reps"
@@ -82,7 +80,7 @@ export const Count: React.FC<CountProps> = ({ count, onDeleteClick, onCountClick
                 contentEditable
                 suppressContentEditableWarning
                 placeholder="-"
-                onInput={(e) =>
+                onBlur={(e) =>
                     onChange(count.id!, 'kg', (e.target as HTMLTableCellElement).innerText)
                 }
                 data-cy="count-kg"

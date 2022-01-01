@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { Backdrop } from '@/components/Backdrop';
-import { ExerciseType } from '@/interfaces';
 import classNames from 'classnames';
 
 interface CountExercisesModalProps {
     show: boolean;
     onClose: () => void;
-    onSelect?: (exerciseId: number) => void;
-    selectedExerciseId?: number;
+    onSelect?: (exerciseId: string) => void;
+    selectedExerciseId?: string;
     exercises?: ExerciseType[];
 }
 
@@ -25,7 +24,7 @@ export const CountExercisesModal: React.FC<CountExercisesModalProps> = ({
                 {exercises &&
                     exercises
                         .slice()
-                        .sort((a, b) => a.id! - b.id!)
+                        // .sort((a, b) => a.id! - b.id!)
                         .map((exercise) => (
                             <li
                                 data-cy="exercise-item"

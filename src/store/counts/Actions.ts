@@ -1,9 +1,10 @@
 import client from '@/client';
+import { v4 as uuid } from 'uuid';
 import { AppDispatch } from '..';
 import { error, loading, add, update, remove, counts } from './index';
 
 export const fetchCounts =
-    (date?: string, exerciseId?: number) => async (dispatch: AppDispatch) => {
+    (date?: string, exerciseId?: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(loading());
             let result = await client.counts({
@@ -25,7 +26,10 @@ export const addCount = (data: CountType) => async (dispatch: AppDispatch) => {
     try {
         // dispatch(loading());
         let result = await client.addCount({
-            data,
+            data: {
+                ...data,
+                id: uuid()
+            },
         });
         if (result.addCount.entity) {
             dispatch(
@@ -40,7 +44,7 @@ export const addCount = (data: CountType) => async (dispatch: AppDispatch) => {
 };
 
 export const updateCount =
-    (countId: number, key: 'exerciseId' | 'reps' | 'sets' | 'kg', value: number) =>
+    (countId: string, key: 'exerciseId' | 'reps' | 'sets' | 'kg', value: number | string) =>
     async (dispatch: AppDispatch) => {
         try {
             // dispatch(loading());
@@ -62,7 +66,7 @@ export const updateCount =
         }
     };
 
-export const removeCount = (countId: number) => async (dispatch: AppDispatch) => {
+export const removeCount = (countId: string) => async (dispatch: AppDispatch) => {
     try {
         // dispatch(loading());
         let result = await client.DeleteCount({

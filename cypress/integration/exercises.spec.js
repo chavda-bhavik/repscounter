@@ -11,7 +11,7 @@ let exerciseResponseData = {
     data: {
         addExercise: {
             entity: {
-                id: 6,
+                id: '5110126a-3201-4281-b1f9-a521b3fcf5d2',
                 calories: newExerciseData.calories,
                 name: newExerciseData.name,
                 target: newExerciseData.target,
@@ -32,7 +32,7 @@ const updateExerciseResponse = {
         updateExercise: {
             errors: null,
             entity: {
-                id: 1,
+                id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                 name: updateExerciseData.name,
                 calories: updateExerciseData.calories,
                 target: updateExerciseData.target,
@@ -45,7 +45,7 @@ const updateExerciseResponse = {
 const deleteExerciseResponse = {
     data: {
         deleteExercise: {
-            id: 1,
+            id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
             name: updateExerciseData.name,
             calories: updateExerciseData.calories,
             target: updateExerciseData.target,

@@ -3,20 +3,20 @@ import countsData from '../fixtures/count/counts.json';
 
 let newCountData = {
     exercise: 'Barbell Pull Up',
-    exerciseId: 2,
+    exerciseId: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
 };
 let addCountResponseData = {
     data: {
         addCount: {
             entity: {
-                id: 6,
+                id: 'a21ab5f8-de95-4243-b4fd-631cce784415',
                 date: '2021-12-12',
                 sets: '',
                 reps: '',
                 kg: '',
-                exerciseId: 1,
+                exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                 exercise: {
-                    id: 1,
+                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                     name: newCountData.exercise,
                 },
             },
@@ -27,7 +27,7 @@ let addCountResponseData = {
 let updateCountData = {
     date: '2021-10-16',
     exercise: 'Bench Press',
-    exerciseId: 2,
+    exerciseId: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
     sets: 9,
     reps: 15,
     kg: 7.5,
@@ -36,14 +36,14 @@ let updateCountResponse1 = {
     data: {
         updateCount: {
             entity: {
-                id: 1,
+                id: 'aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c',
                 date: updateCountData.date,
                 sets: updateCountData.sets,
                 reps: '',
                 kg: '',
-                exerciseId: 1,
+                exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                 exercise: {
-                    id: 1,
+                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                     name: 'Barbell Pull Up',
                 },
             },
@@ -55,14 +55,14 @@ let updateCountResponse2 = {
     data: {
         updateCount: {
             entity: {
-                id: 1,
+                id: 'aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c',
                 date: updateCountData.date,
                 sets: updateCountData.sets,
                 reps: updateCountData.reps,
                 kg: '',
-                exerciseId: 1,
+                exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                 exercise: {
-                    id: 1,
+                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                     name: 'Barbell Pull Up',
                 },
             },
@@ -74,14 +74,14 @@ let updateCountResponse3 = {
     data: {
         updateCount: {
             entity: {
-                id: 1,
+                id: 'aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c',
                 date: updateCountData.date,
                 sets: updateCountData.sets,
                 reps: updateCountData.reps,
                 kg: updateCountData.kg,
-                exerciseId: 1,
+                exerciseId: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                 exercise: {
-                    id: 1,
+                    id: '7e478f73-86ca-4bb9-abaf-e4cae63024d1',
                     name: 'Barbell Pull Up',
                 },
             },
@@ -93,7 +93,7 @@ let updateCountResponse4 = {
     data: {
         updateCount: {
             entity: {
-                id: 1,
+                id: 'aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c',
                 date: updateCountData.date,
                 sets: updateCountData.sets,
                 reps: updateCountData.reps,
@@ -112,14 +112,14 @@ let deleteCountResponse = {
     data: {
         deleteCount: {
             entity: {
-                id: 1,
+                id: 'aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c',
                 date: '2021-10-16',
                 sets: 9,
                 reps: 15,
                 kg: 7.5,
-                exerciseId: 2,
+                exerciseId: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
                 exercise: {
-                    id: 2,
+                    id: 'c3aa9252-7d27-45cf-b111-a38d3b876d58',
                     name: 'Bench Press',
                 },
             },
@@ -161,7 +161,7 @@ describe('Counts', () => {
         cy.intercept('http://localhost:4000/graphql', updateCountResponse1).as('updateCount1');
 
         // updating sets
-        cy.get('[data-cy=count-sets]').eq(0).click().clear().type(updateCountData.sets);
+        cy.get('[data-cy=count-sets]').eq(0).click().clear().type(updateCountData.sets).blur();
         cy.wait('@updateCount1');
         cy.get('[data-cy=count-sets]').eq(0).should('contain.text', updateCountData.sets);
     });
@@ -169,7 +169,7 @@ describe('Counts', () => {
         cy.intercept('http://localhost:4000/graphql', updateCountResponse2).as('updateCount2');
 
         // updating reps
-        cy.get('[data-cy=count-reps]').eq(0).click().clear().type(updateCountData.reps);
+        cy.get('[data-cy=count-reps]').eq(0).click().clear().type(updateCountData.reps).blur();
         cy.wait('@updateCount2');
         cy.get('[data-cy=count-reps]').eq(0).should('contain.text', updateCountData.reps);
     });
@@ -177,7 +177,7 @@ describe('Counts', () => {
         cy.intercept('http://localhost:4000/graphql', updateCountResponse3).as('updateCount3');
 
         // updating kg
-        cy.get('[data-cy=count-kg]').eq(0).click().clear().type(updateCountData.kg);
+        cy.get('[data-cy=count-kg]').eq(0).click().clear().type(updateCountData.kg).blur();
         cy.wait('@updateCount3');
         cy.get('[data-cy=count-kg]').eq(0).should('contain.text', updateCountData.kg);
     });

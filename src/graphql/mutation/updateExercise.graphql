@@ -1,4 +1,4 @@
-mutation UpdateExercise($data: AddExerciseType!, $id: Int!) {
+mutation UpdateExercise($data: AddExerciseType!, $id: String!) {
     updateExercise(data: $data, id: $id) {
         errors {
             field

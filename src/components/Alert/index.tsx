@@ -15,7 +15,7 @@ export const Alert: React.FC<AlertProps> = ({ className, text }) => {
                 className
             )}
         >
-            <div className="flex flex-row space-x-1">
+            <div className="flex flex-row space-x-1 items-center">
                 <Icon icon="alert" className="text-red-500" />
                 <label className="font-semibold md:font-bold text-red-500">{text}</label>
             </div>

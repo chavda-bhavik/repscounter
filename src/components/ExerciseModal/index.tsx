@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { ExerciseType } from '@/interfaces';
 import { useForm } from 'react-hook-form';
 
 import { Backdrop } from '../Backdrop';
@@ -10,7 +9,7 @@ interface ExerciseModalProps {
     show: boolean;
     onClose: () => void;
     onSubmit: (data: ExerciseType) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
     selectedExercise?: ExerciseType;
     submitLoading?: boolean;
     deleteLoading?: boolean;

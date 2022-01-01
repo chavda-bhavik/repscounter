@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'wouter';
+import { registerSW } from 'virtual:pwa-register';
 
 import { Layout } from '@/components/Layout';
 
@@ -10,6 +11,7 @@ import Dashboard from './pages/dashboard';
 import { Header } from './components/Header';
 
 function App() {
+    registerSW();
     return (
         <Layout>
             <Header />

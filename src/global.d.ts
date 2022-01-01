@@ -1,6 +1,13 @@
 declare module 'chartist-plugin-tooltips-updated';
 
-type IconsType = 'anchor' | 'dashboard' | 'taskList' | 'trophy' | 'plus' | 'close' | 'calendarF';
+type IconsType = | 'anchor'
+    | 'dashboard'
+    | 'taskList'
+    | 'trophy'
+    | 'plus'
+    | 'close'
+    | 'calendarF'
+    | 'alert';
 
 type IconsSizesType = 'sm' | 'md' | 'lg';
 
@@ -10,18 +17,18 @@ type TagType = {
 };
 
 type ExerciseType = {
-    id?: number;
+    id?: string;
     name: string;
     target?: string | null;
     calories: number;
 };
 
 type CountType = {
-    id?: number;
+    id?: string;
     date: string;
     reps?: number | null;
     sets?: number | null;
     kg?: number | null;
-    exerciseId?: number;
+    exerciseId?: string;
     exercise?: Partial<ExerciseType>;
 };

@@ -27,7 +27,7 @@ interface UpdateCountType {
     count: CountType;
 }
 interface RemoveCountType {
-    countId: number;
+    countId: string;
 }
 
 export const countSlice = createSlice({

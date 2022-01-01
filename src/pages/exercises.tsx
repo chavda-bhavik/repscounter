@@ -43,7 +43,7 @@ const Exercices: React.FC = () => {
         }
         onClose();
     };
-    const onDeleteExercise = (id: number) => {
+    const onDeleteExercise = (id: string) => {
         dispatch(removeExercise(id));
         onClose();
     };
@@ -59,11 +59,11 @@ const Exercices: React.FC = () => {
     return (
         <>
             <MainContainer loading={loading}>
-                {errorMessage ? <Alert text={errorMessage} /> : null}
+                {errorMessage ? <Alert text={errorMessage} className="mb-2" /> : null}
                 <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
                     {exercises
                         .slice()
-                        .sort((a, b) => a.id! - b.id!)
+                        // .sort((a, b) => a.id! - b.id!)
                         .map((exercise) => (
                             <Exercise
                                 onClick={() => onExerciseClick(exercise)}

@@ -1,8 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import { IconsType, IconsSizesType } from '@/interfaces';
-
 const icons: any = {
     anchor: {
         viewBox: '-2 -2 24 24',

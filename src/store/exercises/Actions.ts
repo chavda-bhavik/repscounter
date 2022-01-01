@@ -1,4 +1,5 @@
 import client from '@/client';
+import { v4 as uuid } from 'uuid';
 import { AppDispatch } from '..';
 import { error, loading, remove, update, add, exercises } from './index';
 
@@ -21,7 +22,10 @@ export const addExercise = (data: ExerciseType) => async (dispatch: AppDispatch)
     try {
         // dispatch(loading());
         let result = await client.AddExercise({
-            data,
+            data: {
+                ...data,
+                id: uuid()
+            },
         });
         if (result.addExercise.entity) {
             dispatch(
@@ -36,7 +40,7 @@ export const addExercise = (data: ExerciseType) => async (dispatch: AppDispatch)
 };
 
 export const updateExercise =
-    (exerciseId: number, data: ExerciseType) => async (dispatch: AppDispatch) => {
+    (exerciseId: string, data: ExerciseType) => async (dispatch: AppDispatch) => {
         try {
             // dispatch(loading());
             let result = await client.UpdateExercise({
@@ -55,7 +59,7 @@ export const updateExercise =
         }
     };
 
-export const removeExercise = (exerciseId: number) => async (dispatch: AppDispatch) => {
+export const removeExercise = (exerciseId: string) => async (dispatch: AppDispatch) => {
     try {
         // dispatch(loading());
         let result = await client.DeleteExercise({
