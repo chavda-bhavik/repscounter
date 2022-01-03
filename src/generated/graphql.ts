@@ -19,6 +19,7 @@ export type Scalars = {
 
 export type AddExerciseType = {
   calories?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   target?: InputMaybe<Scalars['String']>;
 };
@@ -31,8 +32,8 @@ export type Calory = {
 export type Count = {
   date: Scalars['String'];
   exercise: Exercise;
-  exerciseId: Scalars['Float'];
-  id: Scalars['Float'];
+  exerciseId: Scalars['String'];
+  id: Scalars['String'];
   kg?: Maybe<Scalars['Float']>;
   reps?: Maybe<Scalars['Float']>;
   sets?: Maybe<Scalars['Float']>;
@@ -40,7 +41,8 @@ export type Count = {
 
 export type CountInput = {
   date?: InputMaybe<Scalars['String']>;
-  exerciseId?: InputMaybe<Scalars['Float']>;
+  exerciseId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   kg?: InputMaybe<Scalars['Float']>;
   reps?: InputMaybe<Scalars['Float']>;
   sets?: InputMaybe<Scalars['Float']>;
@@ -53,7 +55,7 @@ export type CountResponseType = {
 
 export type Exercise = {
   calories: Scalars['Float'];
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   target?: Maybe<Scalars['String']>;
 };
@@ -89,24 +91,24 @@ export type MutationAddExerciseArgs = {
 
 
 export type MutationDeleteCountArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
 export type MutationDeleteExerciseArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
 export type MutationUpdateCountArgs = {
   data: CountInput;
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
 export type MutationUpdateExerciseArgs = {
   data: AddExerciseType;
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 export type Query = {
@@ -126,18 +128,18 @@ export type QueryCaloriesArgs = {
 
 
 export type QueryCountArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
 export type QueryCountsArgs = {
   date?: InputMaybe<Scalars['DateTime']>;
-  exerciseId?: InputMaybe<Scalars['Int']>;
+  exerciseId?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryExerciseArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
@@ -151,53 +153,53 @@ export type Target = {
   target: Scalars['String'];
 };
 
-export type CountFieldsFragment = { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } };
+export type CountFieldsFragment = { id: string, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: string };
 
-export type ExerciseFieldsFragment = { id: number, name: string, target?: string | null | undefined, calories: number };
+export type ExerciseFieldsFragment = { id: string, name: string, target?: string | null | undefined, calories: number };
 
 export type AddCountMutationVariables = Exact<{
   data: CountInput;
 }>;
 
 
-export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } | null | undefined } };
+export type AddCountMutation = { addCount: { errors?: Array<{ message: string, field: string }> | null | undefined, entity?: { id: string, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: string } | null | undefined } };
 
 export type AddExerciseMutationVariables = Exact<{
   data: AddExerciseType;
 }>;
 
 
-export type AddExerciseMutation = { addExercise: { entity?: { id: number, name: string, target?: string | null | undefined, calories: number } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
+export type AddExerciseMutation = { addExercise: { entity?: { id: string, name: string, target?: string | null | undefined, calories: number } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
 
 export type DeleteCountMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['String'];
 }>;
 
 
-export type DeleteCountMutation = { deleteCount: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } };
+export type DeleteCountMutation = { deleteCount: { id: string, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: string } };
 
 export type DeleteExerciseMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['String'];
 }>;
 
 
-export type DeleteExerciseMutation = { deleteExercise: { id: number, name: string, target?: string | null | undefined, calories: number } };
+export type DeleteExerciseMutation = { deleteExercise: { id: string, name: string, target?: string | null | undefined, calories: number } };
 
 export type UpdateCountMutationVariables = Exact<{
   data: CountInput;
-  id: Scalars['Int'];
+  id: Scalars['String'];
 }>;
 
 
-export type UpdateCountMutation = { updateCount: { entity?: { id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
+export type UpdateCountMutation = { updateCount: { entity?: { id: string, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: string } | null | undefined, errors?: Array<{ field: string, message: string }> | null | undefined } };
 
 export type UpdateExerciseMutationVariables = Exact<{
   data: AddExerciseType;
-  id: Scalars['Int'];
+  id: Scalars['String'];
 }>;
 
 
-export type UpdateExerciseMutation = { updateExercise: { errors?: Array<{ field: string, message: string }> | null | undefined, entity?: { id: number, name: string, target?: string | null | undefined, calories: number } | null | undefined } };
+export type UpdateExerciseMutation = { updateExercise: { errors?: Array<{ field: string, message: string }> | null | undefined, entity?: { id: string, name: string, target?: string | null | undefined, calories: number } | null | undefined } };
 
 export type CaloriesQueryVariables = Exact<{
   dateEnd: Scalars['DateTime'];
@@ -208,17 +210,17 @@ export type CaloriesQueryVariables = Exact<{
 export type CaloriesQuery = { calories: Array<{ calories: number, date: string }> };
 
 export type CountsQueryVariables = Exact<{
-  exerciseId?: InputMaybe<Scalars['Int']>;
+  exerciseId?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['DateTime']>;
 }>;
 
 
-export type CountsQuery = { counts: Array<{ id: number, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: number, exercise: { id: number, name: string } }> };
+export type CountsQuery = { counts: Array<{ id: string, date: string, sets?: number | null | undefined, reps?: number | null | undefined, kg?: number | null | undefined, exerciseId: string }> };
 
 export type ExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExercisesQuery = { exercises: Array<{ id: number, name: string, target?: string | null | undefined, calories: number }> };
+export type ExercisesQuery = { exercises: Array<{ id: string, name: string, target?: string | null | undefined, calories: number }> };
 
 export type TargetsQueryVariables = Exact<{
   dateEnd: Scalars['DateTime'];
@@ -236,10 +238,6 @@ export const CountFieldsFragmentDoc = gql`
   reps
   kg
   exerciseId
-  exercise {
-    id
-    name
-  }
 }
     `;
 export const ExerciseFieldsFragmentDoc = gql`
@@ -277,21 +275,21 @@ export const AddExerciseDocument = gql`
 }
     ${ExerciseFieldsFragmentDoc}`;
 export const DeleteCountDocument = gql`
-    mutation DeleteCount($id: Int!) {
+    mutation DeleteCount($id: String!) {
   deleteCount(id: $id) {
     ...CountFields
   }
 }
     ${CountFieldsFragmentDoc}`;
 export const DeleteExerciseDocument = gql`
-    mutation DeleteExercise($id: Int!) {
+    mutation DeleteExercise($id: String!) {
   deleteExercise(id: $id) {
     ...ExerciseFields
   }
 }
     ${ExerciseFieldsFragmentDoc}`;
 export const UpdateCountDocument = gql`
-    mutation updateCount($data: CountInput!, $id: Int!) {
+    mutation updateCount($data: CountInput!, $id: String!) {
   updateCount(data: $data, id: $id) {
     entity {
       ...CountFields
@@ -304,7 +302,7 @@ export const UpdateCountDocument = gql`
 }
     ${CountFieldsFragmentDoc}`;
 export const UpdateExerciseDocument = gql`
-    mutation UpdateExercise($data: AddExerciseType!, $id: Int!) {
+    mutation UpdateExercise($data: AddExerciseType!, $id: String!) {
   updateExercise(data: $data, id: $id) {
     errors {
       field
@@ -325,7 +323,7 @@ export const CaloriesDocument = gql`
 }
     `;
 export const CountsDocument = gql`
-    query counts($exerciseId: Int, $date: DateTime) {
+    query counts($exerciseId: String, $date: DateTime) {
   counts(exerciseId: $exerciseId, date: $date) {
     ...CountFields
   }

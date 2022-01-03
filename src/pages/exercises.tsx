@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 
 import { Exercise } from '@/components/Exercise';
 import { FixedButton } from '@/components/FixedButton';
-import { Header } from '@/components/Header';
-import { ExerciseModal } from '@/components/ExerciseModal';
 import { MainContainer } from '@/components/MainContainer';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
@@ -14,6 +12,8 @@ import {
 } from '@/store/exercises/Actions';
 import { useKeyPress } from '@/hooks/useKeyPress';
 
+const LazyExerciseModal = lazy(() => import('@/components/ExerciseModal'));
+
 const Exercices: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedExercise, setSelectedExercise] = useState<ExerciseType>();
@@ -21,7 +21,7 @@ const Exercices: React.FC = () => {
     const addClicked = useKeyPress({ userKeys: ['+'] });
     const escapClicked = useKeyPress({ userKeys: ['Escape'] });
 
-    const { exercises, loading, errorMessage } = useAppSelector((state) => state.exercise);
+    const { exercises, loading } = useAppSelector((state) => state.exercise);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const Exercices: React.FC = () => {
         }
         onClose();
     };
-    const onDeleteExercise = (id: number) => {
+    const onDeleteExercise = (id: string) => {
         dispatch(removeExercise(id));
         onClose();
     };
@@ -62,7 +62,7 @@ const Exercices: React.FC = () => {
                 <ul className="bg-base-200 border-2 border-primary-dark shadow-md p-2 rounded-xl">
                     {exercises
                         .slice()
-                        .sort((a, b) => a.id! - b.id!)
+                        // .sort((a, b) => a.id! - b.id!)
                         .map((exercise) => (
                             <Exercise
                                 onClick={() => onExerciseClick(exercise)}
@@ -74,13 +74,15 @@ const Exercices: React.FC = () => {
                 </ul>
             </MainContainer>
             <FixedButton dataCy="add" onClick={() => setShowModal(true)} />
-            <ExerciseModal
-                show={showModal}
-                onClose={onClose}
-                onSubmit={onSubmitExercise}
-                onDelete={onDeleteExercise}
-                selectedExercise={selectedExercise}
-            />
+            <Suspense fallback={null}>
+                <LazyExerciseModal
+                    show={showModal}
+                    onClose={onClose}
+                    onSubmit={onSubmitExercise}
+                    onDelete={onDeleteExercise}
+                    selectedExercise={selectedExercise}
+                />
+            </Suspense>
         </>
     );
 };

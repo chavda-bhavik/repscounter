@@ -9,6 +9,7 @@ interface FixedButtonProps {
     ariaLabel?: string;
     onClick?: () => void;
     className?: string;
+    disabled?: boolean;
 }
 
 export const FixedButton: React.FC<FixedButtonProps> = ({
@@ -17,6 +18,7 @@ export const FixedButton: React.FC<FixedButtonProps> = ({
     dataCy,
     ariaLabel,
     size = 'lg',
+    disabled = false,
     className,
 }) => {
     return (
@@ -28,6 +30,7 @@ export const FixedButton: React.FC<FixedButtonProps> = ({
             )}
             data-cy={dataCy}
             aria-label={ariaLabel}
+            disabled={disabled}
         >
             <Icon
                 icon={icon}

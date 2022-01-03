@@ -1,4 +1,4 @@
-mutation DeleteCount($id: Int!) {
+mutation DeleteCount($id: String!) {
     deleteCount(id: $id) {
         ...CountFields
     }

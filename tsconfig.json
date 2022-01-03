@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "WebWorker"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,10 +24,14 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "types": [
+      "vite-plugin-svgr/client",
+      "vite-plugin-pwa/client"
+    ]
   },
   "include": [
-    "./src",
+    "./src"
   ],
   "exclude": [
     "node_modules"

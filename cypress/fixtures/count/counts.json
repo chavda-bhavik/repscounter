@@ -2,56 +2,36 @@
     "data": {
         "counts": [
             {
-                "id": 1,
+                "id": "aaa712db-7da2-4ed8-a8e6-a7dd1a2ecd1c",
                 "date": "2021-10-11",
                 "sets": 5,
                 "reps": 15,
                 "kg": "",
-                "exerciseId": 1,
-                "exercise": {
-                    "name": "Barbell Pull Up",
-                    "__typename": "Exercise"
-                },
-                "__typename": "Count"
+                "exerciseId": "7e478f73-86ca-4bb9-abaf-e4cae63024d1"
             },
             {
-                "id": 2,
+                "id": "1cefedd3-2333-4cf7-96e5-92c5482ab28b",
                 "date": "2021-10-12",
                 "sets": 5,
                 "reps": 10,
                 "kg": "5",
-                "exerciseId": 2,
-                "exercise": {
-                    "name": "Bench Press",
-                    "__typename": "Exercise"
-                },
-                "__typename": "Count"
+                "exerciseId": "c3aa9252-7d27-45cf-b111-a38d3b876d58"
             },
             {
-                "id": 3,
+                "id": "8483f183-6777-4c99-8280-695fb0f9d547",
                 "date": "2021-10-12",
                 "sets": 5,
                 "reps": 10,
                 "kg": "10",
-                "exerciseId": 3,
-                "exercise": {
-                    "name": "Sholder Press",
-                    "__typename": "Exercise"
-                },
-                "__typename": "Count"
+                "exerciseId": "6d94b293-2d10-4241-86de-b9f500188732"
             },
             {
-                "id": 4,
+                "id": "90cc18e8-2367-4e10-9708-a24facf60cd6",
                 "date": "2021-10-13",
                 "sets": 5,
                 "reps": 10,
                 "kg": "12.5",
-                "exerciseId": 4,
-                "exercise": {
-                    "name": "Dumbell Curls",
-                    "__typename": "Exercise"
-                },
-                "__typename": "Count"
+                "exerciseId": "73902ae9-4e05-418d-b3d0-a26720fa4fd7"
             }
         ]
     }

@@ -25,7 +25,7 @@ export const Calories: React.FC<CaloriesProps> = ({}) => {
         labels: [],
         datasets: [],
     });
-    const { calories, loading, errorMessage } = useAppSelector((state) => state.dashboard);
+    const { calories, loading } = useAppSelector((state) => state.dashboard);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

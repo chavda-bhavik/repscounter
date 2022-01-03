@@ -25,7 +25,7 @@ interface UpdateExerciseType {
     exercise: ExerciseType;
 }
 interface RemoveExerciseType {
-    exerciseId: number;
+    exerciseId: string;
 }
 
 export const exerciseSlice = createSlice({

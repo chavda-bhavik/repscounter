@@ -1,4 +1,4 @@
-mutation updateCount($data: CountInput!, $id: Int!) {
+mutation updateCount($data: CountInput!, $id: String!) {
     updateCount(data: $data, id: $id) {
         entity {
             ...CountFields

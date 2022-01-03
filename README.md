@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">RepsCounter</h1>
 
-## Getting Started
+> React application to count reps & sets of exercises 🏋. PWA with the ability to store data locally and work offline.
 
-First, run the development server:
+## ✨ Features
+* PWA, Fully Offline Capable, SEO Oriented and Built in Typescript
+* Clean UI and animation with GSAP for Good UX
+* Responsive, Easy Navigation, Easy Access and Nice Loading Indicator
+* Linting and formatting with **eslint** and **prettier**
 
-```bash
-npm run dev
-# or
+## Backend
+> Repscounter Backend source is available <a href="https://github.com/chavda-bhavik/repscounter-api">here</a>.
+
+## 🤯 Problems Face and Solved
+* Facility to provide Offline Add, Update and Delete Facility was Challenging
+* Making UX smooth with Animation was Challenging and took some iterations
+* Keeping Application bundle size smaller with Code Splitting was interesting
+* Writing End-to-End tests with Cypress was new
+* Typescript support with graphql-codegen provided good learning
+
+## 🤖 Things used for building Application
+<ul>
+  <li><a href="https://vitejs.dev/" target="_blank">ViteJS</a> To Build & Develop</li>
+  <li><a href="https://reactjs.org" target="_blank">React</a> Library to Build awesome User Interface</li>
+  <li><a href="https://tailwindcss.com" target="_blank">TailwindCSS</a> To Style the Application</li>
+  <li><a href="https://www.cypress.io" target="_blank">Cypress</a> To wite End to End Test Cases</li>
+</ul>
+<ul>
+  <li><a href="https://typicode.github.io/husky" target="_blank">Husky</a> Git Hooks to execute Tests before commit</li>
+  <li><a href="https://github.com/molefrog/wouter" target="_blank">Wouter</a> A minimalist-friendly routing for React</li>
+  <li><a href="https://react-chartjs-2.netlify.app" target="_blank">React ChartJS</a> To draw Charts on Dashboard</li>
+  <li><a href="https://greensock.com" target="_blank">GSAP</a> For Animating UI</li>
+  <li><a href="https://redux.js.org" target="_blank">ReduxJS</a>, <a href="https://redux-toolkit.js.org" target="_blank">Redux Toolkit</a> To provide Offline storage and Central Storage Functionality</li>
+  <li><a href="https://github.com/prisma-labs/graphql-request" target="_blank">Graphql-Request</a>, <a href="https://www.graphql-code-generator.com" target="_blank"> Graphql Code Generator</a> To Create Typesafe Schema to connect API</li>
+  <li><a href="https://github.com/wojtekmaj/react-calendar" target="_blank">React Calendar</a>, To show Calendar</li>
+  <li><a href="" target="_blank"></a> </li>
+</ul>
+
+## 📩 Install
+```sh
+yarn install
+```
+
+## 💨 Run
+```sh
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 😎 Author
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+👤 **Bhavik Chavda**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Website: [bhavikchavda.com](http://www.bhavikchavda.com)
+* Twitter: [@chavdabhavik7](https://twitter.com/chavdabhavik7)
+* Github: [@chavda-bhavik](https://github.com/chavda-bhavik)
+* LinkedIn: [@chavdabhavik7](https://linkedin.com/in/chavdabhavik7)

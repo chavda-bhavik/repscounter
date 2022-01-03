@@ -1,9 +1,10 @@
 import client from '@/client';
+import { v4 as uuid } from 'uuid';
 import { AppDispatch } from '..';
 import { error, loading, add, update, remove, counts } from './index';
 
 export const fetchCounts =
-    (date?: string, exerciseId?: number) => async (dispatch: AppDispatch) => {
+    (date?: string, exerciseId?: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(loading());
             let result = await client.counts({
@@ -22,60 +23,75 @@ export const fetchCounts =
     };
 
 export const addCount = (data: CountType) => async (dispatch: AppDispatch) => {
+    let countToAdd = {
+        ...data,
+        id: uuid()
+    }
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.addCount({
-            data,
+            data: countToAdd,
         });
         if (result.addCount.entity) {
-            dispatch(
-                add({
-                    count: result.addCount.entity,
-                })
-            );
+            countToAdd = {
+                ...result.addCount.entity
+            }
         }
     } catch (err) {
         dispatch(error((err as Error).message));
     }
+    dispatch(
+        add({
+            count: countToAdd
+        })
+    );
 };
 
 export const updateCount =
-    (countId: number, key: 'exerciseId' | 'reps' | 'sets' | 'kg', value: number) =>
-    async (dispatch: AppDispatch) => {
-        try {
-            dispatch(loading());
-            let result = await client.updateCount({
-                data: {
-                    [key]: value,
-                },
-                id: countId,
-            });
-            if (result.updateCount.entity) {
-                dispatch(
-                    update({
-                        count: result.updateCount.entity,
-                    })
-                );
+    (countId: string, key: 'exerciseId' | 'reps' | 'sets' | 'kg', value: number | string) =>
+        async (dispatch: AppDispatch) => {
+            let updateData = {
+                [key]: value
             }
-        } catch (err) {
-            dispatch(error((err as Error).message));
-        }
+            let updatedCount: Partial<CountType> = {
+                id: countId,
+                [key]: value
+            }
+            try {
+                // dispatch(loading());
+                let result = await client.updateCount({
+                    data: {
+                        ...updateData
+                    },
+                    id: countId,
+                });
+                if (result.updateCount.entity) {
+                    updatedCount = {
+                        ...result.updateCount.entity
+                    };
+                }
+            } catch (err) {
+                dispatch(error((err as Error).message));
+            }
+            dispatch(
+                update({
+                    count: updatedCount
+                })
+            );
     };
 
-export const removeCount = (countId: number) => async (dispatch: AppDispatch) => {
+export const removeCount = (countId: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(loading());
+        // dispatch(loading());
         let result = await client.DeleteCount({
             id: countId,
         });
-        if (result.deleteCount) {
-            dispatch(
-                remove({
-                    countId,
-                })
-            );
-        }
     } catch (err) {
         dispatch(error((err as Error).message));
     }
+    dispatch(
+        remove({
+            countId,
+        })
+    );
 };
