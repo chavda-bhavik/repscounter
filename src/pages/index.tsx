@@ -57,7 +57,7 @@ const Home: React.FC = () => {
             setFormattedExercises(data);
         }
     }, [exercises]);
-    console.log(formattedExercises, exercises, counts);
+
     const onCountUpdate = (
         countId: string,
         key: 'exerciseId' | 'reps' | 'sets' | 'kg',
