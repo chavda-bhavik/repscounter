@@ -37,7 +37,7 @@ const Home: React.FC = () => {
     }, []);
     // effect to fetch counts on date change
     useEffect(() => {
-        dispatch(fetchCounts(date.toISOString()));
+        dispatch(fetchCounts(formatDateToString(date)));
     }, [date]);
     // effect to run on key press
     useEffect(() => {
