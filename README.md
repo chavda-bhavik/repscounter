@@ -8,7 +8,20 @@
   <a href="https://repscounter.herokuapp.com" target="_blank">Live demo</a> | <a href="https://github.com/chavda-bhavik/repscounter-api" target="_blank">API Code</a>
 </div>
 
+## Running locally
+
+### Setup
+* Setup Backend Application from [Here](https://github.com/chavda-bhavik/repscounter-api#running-locally)
+
+### Steps
+- `git clone https://github.com/chavda-bhavik/repscounter-api`
+- `yarn` (after navigating inside the directory)
+- `yarn watch && yarn dev`
+
+----
+
 ## About RepsCounter
+
 ### Pages
 - Manage Exercises View
 - Dashboard View
