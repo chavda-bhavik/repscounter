@@ -14,9 +14,9 @@
 * Setup Backend Application from [Here](https://github.com/chavda-bhavik/repscounter-api#running-locally)
 
 ### Steps
-- `git clone https://github.com/chavda-bhavik/repscounter-api`
+- `git clone https://github.com/chavda-bhavik/repscounter`
 - `yarn` (after navigating inside the directory)
-- `yarn watch && yarn dev`
+- `yarn dev`
 
 ----
 
