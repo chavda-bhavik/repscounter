@@ -1,24 +1,44 @@
-<h1 align="center">RepsCounter</h1>
+<div align="center">
+  <h2>RepsCountere</h2>
 
-> React application to count reps & sets of exercises 🏋. PWA with the ability to store data locally and work offline.
+  ### Web app to count reps & sets of exercises with the ability to store data locally and work offline.
+  
+  ![RepsCounter-V2](https://user-images.githubusercontent.com/50201755/158003403-eb577043-7734-4e4a-96b5-6a10977f327f.gif)
 
-## ✨ Features
-* PWA, Fully Offline Capable, SEO Oriented and Built in Typescript
-* Clean UI and animation with GSAP for Good UX
-* Responsive, Easy Navigation, Easy Access and Nice Loading Indicator
-* Linting and formatting with **eslint** and **prettier**
+  <a href="https://repscounter.herokuapp.com" target="_blank">Live demo</a> | <a href="https://github.com/chavda-bhavik/repscounter-api" target="_blank">API Code</a>
+</div>
 
-## Backend
-> Repscounter Backend source is available <a href="https://github.com/chavda-bhavik/repscounter-api">here</a>.
+## About RepsCounter
+### Pages
+- Manage Exercises View
+- Dashboard View
+- Manage Daily Count View
 
-## 🤯 Problems Face and Solved
-* Facility to provide Offline Add, Update and Delete Facility was Challenging
-* Making UX smooth with Animation was Challenging and took some iterations
-* Keeping Application bundle size smaller with Code Splitting was interesting
-* Writing End-to-End tests with Cypress was new
-* Typescript support with graphql-codegen provided good learning
+### Facilities
+- Manage Exercises
+- Manage User Exercise counts
+- View Weekly Dashboard
+- PWA & Store data locally
 
-## 🤖 Things used for building Application
+### Features
+- built on Typescript
+- Interactive Animations using **gsap**
+- Responsive for various screen sizes
+- Tests written using **cypress**
+- Easy to understand code and project structure
+- Using **Redux Toolkit** for global state management
+- Easy & Lightweight frontend tooling with **Vite**
+- Typesafe type generation with **graphql-codegen**
+- Linting and formatting with **eslint** and **prettier**
+
+## Problems Face and Solved
+- Facility to provide Offline Add, Update and Delete Facility was Challenging
+- Making UX smooth with Animation was Challenging and took some iterations
+- Keeping Application bundle size smaller with Code Splitting was interesting
+- Writing End-to-End tests with Cypress was new
+- Typescript support with graphql-codegen provided good learning
+
+## Technologies 🤖
 <ul>
   <li><a href="https://vitejs.dev/" target="_blank">ViteJS</a> To Build & Develop</li>
   <li><a href="https://reactjs.org" target="_blank">React</a> Library to Build awesome User Interface</li>
@@ -33,24 +53,7 @@
   <li><a href="https://redux.js.org" target="_blank">ReduxJS</a>, <a href="https://redux-toolkit.js.org" target="_blank">Redux Toolkit</a> To provide Offline storage and Central Storage Functionality</li>
   <li><a href="https://github.com/prisma-labs/graphql-request" target="_blank">Graphql-Request</a>, <a href="https://www.graphql-code-generator.com" target="_blank"> Graphql Code Generator</a> To Create Typesafe Schema to connect API</li>
   <li><a href="https://github.com/wojtekmaj/react-calendar" target="_blank">React Calendar</a>, To show Calendar</li>
-  <li><a href="" target="_blank"></a> </li>
 </ul>
 
-## 📩 Install
-```sh
-yarn install
-```
 
-## 💨 Run
-```sh
-yarn dev
-```
-
-## 😎 Author
-
-👤 **Bhavik Chavda**
-
-* Website: [bhavikchavda.com](http://www.bhavikchavda.com)
-* Twitter: [@chavdabhavik7](https://twitter.com/chavdabhavik7)
-* Github: [@chavda-bhavik](https://github.com/chavda-bhavik)
-* LinkedIn: [@chavdabhavik7](https://linkedin.com/in/chavdabhavik7)
+------------
