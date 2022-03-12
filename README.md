@@ -1,5 +1,5 @@
 <div align="center">
-  <h2>RepsCountere</h2>
+  <h2>RepsCounter</h2>
 
   ### Web app to count reps & sets of exercises with the ability to store data locally and work offline.
   
